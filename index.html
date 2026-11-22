@@ -11,7 +11,11 @@
 <link rel="preload" href="foto/grigia-soggiorno.jpg" as="image">
 <script>
   /* Il movimento parte solo se il sistema non chiede «riduci movimento». Senza la classe, tutto è visibile e fermo. */
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('motion');
+    /* Le scene agganciate allo scroll (foto che si allarga, case nel riquadro fisso, fiere in orizzontale) solo da tablet in su: sul telefono scattano e allungano la pagina */
+    if (matchMedia('(min-width:735px)').matches) document.documentElement.classList.add('scenes');
+  }
 </script>
 <style>
 /* ── Tokens «La Chiave», versione Apple ─────────────────────
@@ -32,7 +36,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{font-family:var(--sf);font-size:21px;line-height:1.48;font-weight:500;letter-spacing:-.011em;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:clip}
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit;color:inherit}
 html[lang="it"] [lang="en"]:not(html){display:none!important}
@@ -73,6 +77,7 @@ section{position:relative}
 .nav-in{position:relative;height:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--side);display:flex;align-items:center;justify-content:space-between;gap:24px;transform:translateY(6px);transition:transform 500ms var(--ease)}
 .nav.scrolled .nav-in{transform:none}
 .brand{display:block;position:relative;width:128px;height:25px}
+.brand::before{content:"";position:absolute;inset:-12px -8px}
 .brand img{position:absolute;inset:0;width:100%;height:100%;transition:opacity 300ms ease}
 .brand .w{opacity:0}
 .nav-links{display:flex;gap:28px;font-size:17px;font-weight:500;color:var(--ink)}
@@ -117,11 +122,11 @@ section{position:relative}
 .chip{position:absolute;z-index:2;left:50%;bottom:28px;display:flex;align-items:center;gap:12px;padding:12px 22px 12px 18px;border-radius:999px;background:rgba(255,255,255,.66);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border:1px solid rgba(255,255,255,.6);box-shadow:0 8px 32px rgba(0,0,0,.12);font-size:19px;font-weight:600;white-space:nowrap;transform:translateX(-50%)}
 .chip .num{font-size:28px;font-weight:700;letter-spacing:-.02em}
 .chip i{width:12px;height:17px;background:var(--cobalt);-webkit-mask:var(--kh) center/contain no-repeat;mask:var(--kh) center/contain no-repeat}
-.motion .hz{height:220vh;margin-top:var(--hz-m,0px)}
-.motion .hz-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;pointer-events:none}
-.motion .hz-frame{position:absolute;inset:0;width:100%;max-width:none;margin:0;aspect-ratio:auto;border-radius:0;will-change:transform}
-.motion .hz-frame img{will-change:transform}
-.motion .chip{bottom:40px}
+.scenes .hz{height:220vh;margin-top:var(--hz-m,0px)}
+.scenes .hz-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;pointer-events:none}
+.scenes .hz-frame{position:absolute;inset:0;width:100%;max-width:none;margin:0;aspect-ratio:auto;border-radius:0;will-change:transform}
+.scenes .hz-frame img{will-change:transform}
+.scenes .chip{bottom:40px}
 
 /* ── Numeri ── */
 .dark{background:var(--black);color:#F5F5F7}
@@ -150,22 +155,22 @@ section{position:relative}
 .cs-go p{font-size:21px;color:var(--grey)}
 @media (max-width:734px){.house{grid-template-columns:1fr;gap:20px}}
 
-.motion .cs{height:340vh;padding-bottom:0}
-.motion .cs-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:var(--wrap);margin:0 auto;padding:84px var(--side) 40px;
+.scenes .cs{height:340vh;padding-bottom:0}
+.scenes .cs-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:var(--wrap);margin:0 auto;padding:84px var(--side) 40px;
   grid-template-columns:4fr 8fr;grid-template-rows:auto 1fr;grid-template-areas:"tabs ph" "cap ph";column-gap:56px;row-gap:40px;align-items:center}
-.motion .house{display:contents}
-.motion .h-ph{grid-area:ph;align-self:center;height:min(68vh,620px);aspect-ratio:auto;opacity:0;will-change:opacity}
-.motion .h-ph img{will-change:transform}
-.motion .h-cap{grid-area:cap;align-self:start;opacity:0;will-change:transform,opacity}
-.motion .house:first-of-type .h-ph,.motion .house:first-of-type .h-cap{opacity:1}
-.motion .cs-tabs{grid-area:tabs;align-self:end;display:inline-flex;justify-self:start;padding:4px;border-radius:999px;background:rgba(0,0,0,.05)}
+.scenes .house{display:contents}
+.scenes .h-ph{grid-area:ph;align-self:center;height:min(68vh,620px);aspect-ratio:auto;opacity:0;will-change:opacity}
+.scenes .h-ph img{will-change:transform}
+.scenes .h-cap{grid-area:cap;align-self:start;opacity:0;will-change:transform,opacity}
+.scenes .house:first-of-type .h-ph,.scenes .house:first-of-type .h-cap{opacity:1}
+.scenes .cs-tabs{grid-area:tabs;align-self:end;display:inline-flex;justify-self:start;padding:4px;border-radius:999px;background:rgba(0,0,0,.05)}
 .cs-tabs button{border:0;background:none;cursor:pointer;font-size:17px;font-weight:600;padding:10px 20px;border-radius:999px;color:var(--grey);transition:background-color 300ms var(--ease),color 300ms ease,box-shadow 300ms ease}
 .cs-tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.1)}
 @media (max-width:734px){
-  .motion .cs-stage{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"tabs" "ph" "cap";row-gap:20px;padding-top:72px;align-items:start}
-  .motion .cs-tabs{justify-self:center;align-self:start}
-  .motion .h-ph{height:44vh;height:44svh;align-self:start}
-  .motion .thumbs{display:none}
+  .scenes .cs-stage{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"tabs" "ph" "cap";row-gap:20px;padding-top:72px;align-items:start}
+  .scenes .cs-tabs{justify-self:center;align-self:start}
+  .scenes .h-ph{height:44vh;height:44svh;align-self:start}
+  .scenes .thumbs{display:none}
 }
 
 /* terrazza */
@@ -208,10 +213,10 @@ figcaption{font-size:17px;color:var(--grey);margin-top:12px}
 .fc.cta .ev{color:var(--ink);font-size:36px}
 .hs-bar{max-width:var(--wrap);width:calc(100% - 2*var(--side));margin:0 auto;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;display:none}
 .hs-bar i{display:block;height:100%;background:#fff;transform:scaleX(0);transform-origin:left}
-.motion .hs{padding-bottom:0}
-.motion .hs-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;padding:60px 0 0}
-.motion .hs-track{overflow:visible;width:max-content;will-change:transform}
-.motion .hs-bar{display:block}
+.scenes .hs{padding-bottom:0}
+.scenes .hs-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;padding:60px 0 0}
+.scenes .hs-track{overflow:visible;width:max-content;will-change:transform}
+.scenes .hs-bar{display:block}
 
 /* ── Bento ── */
 .sec{padding:clamp(96px,13vw,160px) 0}
@@ -257,21 +262,6 @@ figcaption{font-size:17px;color:var(--grey);margin-top:12px}
 .quotes blockquote:nth-child(2){margin-left:clamp(0px,12vw,160px)}
 .quotes blockquote:nth-child(3){margin-left:clamp(0px,6vw,80px)}
 
-/* prenota: foto con il vetro sopra */
-.book{position:relative;border-radius:28px;overflow:hidden;min-height:680px;display:flex;align-items:center;justify-content:flex-end;padding:40px}
-.book>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.engine{position:relative;width:min(460px,100%);border-radius:28px;padding:40px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);border:1px solid rgba(255,255,255,.7);box-shadow:0 24px 64px rgba(0,0,0,.18);display:grid;gap:16px}
-.engine h2{font-size:clamp(36px,4vw,52px);letter-spacing:-.035em;line-height:1.02;margin-bottom:8px}
-.engine .eyebrow{margin-bottom:0}
-.engine .f input,.engine .f select{background:rgba(255,255,255,.9)}
-.engine .btn{width:100%;margin-top:8px}
-.engine .tag{font-size:17px;color:var(--grey)}
-@media (max-width:734px){
-  .book{display:block;padding:0;min-height:0;background:var(--mist)}
-  .book>img{position:relative;height:300px}
-  .engine{width:auto;margin:-72px 12px 12px;padding:28px}
-}
-
 /* FAQ */
 .faq{max-width:900px;margin-top:56px;border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -297,12 +287,144 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
 .dock.on{transform:none;opacity:1}
 @media (min-width:735px){.dock{display:none}}
 
+/* ── Prima e dopo del prezzo diretto ── */
+.save{margin-top:56px;border-radius:28px;background:#fff;padding:clamp(28px,4vw,56px);display:grid;grid-template-columns:1fr 1fr;gap:28px 56px;align-items:end}
+.save h3{grid-column:1/-1;font-size:clamp(32px,3.6vw,52px);line-height:1.04;letter-spacing:-.035em}
+.cmp{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cmp>div{border-radius:20px;padding:24px 28px;background:var(--mist)}
+.cmp .now{background:var(--cobalt);color:#fff}
+.cmp .lbl{font-size:19px;font-weight:600;color:var(--grey)}
+.cmp .now .lbl{color:rgba(255,255,255,.86)}
+.cmp .amt{font-size:clamp(52px,6vw,80px);font-weight:700;letter-spacing:-.045em;line-height:1;margin-top:10px}
+.cmp .was .amt{color:var(--grey)}
+.cmp s{text-decoration-thickness:4px;text-decoration-color:rgba(110,110,115,.7)}
+.cmp .gain{margin-top:10px;font-size:21px;font-weight:600}
+.save .note{font-size:17px;color:var(--grey)}
+.save .btn{justify-self:end}
+@media (max-width:734px){.save{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.save .btn{justify-self:stretch}}
+
+/* ── Calendario della disponibilità ── */
+.pren{scroll-margin-top:52px}
+.bk{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:16px;margin-top:48px;align-items:start}
+.cal,.sum{border-radius:28px;background:var(--mist);padding:clamp(20px,3vw,36px)}
+.cal-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.legend{display:flex;gap:20px;list-style:none;font-size:17px;color:var(--grey);flex-wrap:wrap}
+.legend li{display:flex;align-items:center;gap:8px}
+.legend i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-style:normal;font-size:12px;font-weight:600}
+.lg-free{background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+.lg-last{background:#fff;position:relative}
+.lg-last::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--cobalt);position:absolute;bottom:3px;left:8px}
+.lg-full{color:#AEAEB2;text-decoration:line-through;text-decoration-thickness:2px}
+.cal-nav{display:flex;gap:8px}
+.arr{width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:opacity 200ms ease,transform 120ms var(--ease)}
+.arr:active{transform:scale(.94)}
+.arr:disabled{opacity:.35;cursor:default}
+.months{display:flex;gap:32px;min-width:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-top:20px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.months::-webkit-scrollbar{display:none}
+.month{flex:0 0 calc(50% - 16px);scroll-snap-align:start;min-width:0}
+.month h3{font-size:24px;letter-spacing:-.02em;margin:4px 0 12px;text-transform:capitalize}
+.wk,.days{display:grid;grid-template-columns:repeat(7,1fr)}
+.wk span{font-size:15px;font-weight:600;color:var(--grey);text-align:center;padding:6px 0}
+.d{position:relative;height:48px;border:0;background:none;padding:0;cursor:pointer;font-size:17px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent}
+.d span{position:relative;z-index:1;display:grid;place-items:center;width:min(44px,100%);aspect-ratio:1;margin:2px auto;border-radius:50%;transition:background-color 160ms ease,color 160ms ease}
+.d.last span::after{content:"";position:absolute;bottom:5px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--cobalt)}
+.d.full span{color:#AEAEB2;text-decoration:line-through;text-decoration-thickness:2px}
+.d.past span{color:#C7C7CC}
+.d:disabled{cursor:default}
+.d.out span{opacity:.32}
+.d.in::before{content:"";position:absolute;inset:2px 0;background:rgba(43,69,224,.12)}
+.d.s::before{content:"";position:absolute;inset:2px 0 2px 50%;background:rgba(43,69,224,.12)}
+.d.e::before{content:"";position:absolute;inset:2px 50% 2px 0;background:rgba(43,69,224,.12)}
+.d.s:not(.has-e)::before{display:none}
+.d.full.okout span{text-decoration:none;color:var(--ink)}
+.d.s span,.d.e span{background:var(--cobalt);color:#fff;text-decoration:none}
+.d.s span::after,.d.e span::after{background:#fff}
+.d.today span{box-shadow:inset 0 0 0 2px var(--line)}
+@media (hover:hover) and (pointer:fine){.d:not(:disabled):not(.s):not(.e):hover span{background:#fff}}
+.d:focus-visible{outline:none}.d:focus-visible span{outline:3px solid var(--cobalt);outline-offset:1px}
+.upd{margin-top:16px;font-size:17px;color:var(--grey)}
+.upd b{font-weight:600;color:var(--ink)}
+.sum{display:grid;gap:16px;position:sticky;top:76px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slot{min-height:76px;border-radius:20px;border:0;background:#fff;text-align:left;padding:12px 16px;cursor:pointer;display:grid;align-content:center;gap:2px;box-shadow:inset 0 0 0 2px transparent;transition:box-shadow 200ms ease}
+.slot.act{box-shadow:inset 0 0 0 2px var(--cobalt)}
+.slot .sl{font-size:15px;font-weight:600;color:var(--grey)}
+.slot b{font-size:19px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hint{font-size:19px;font-weight:600;min-height:1.5em}
+.guests{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:20px;padding:8px 8px 8px 20px}
+.gl{font-size:19px;font-weight:600}
+.step{display:flex;align-items:center;gap:4px}
+.step button{width:48px;height:48px;border-radius:50%;border:0;background:var(--mist);font-size:26px;line-height:1;font-weight:500;cursor:pointer;color:var(--ink)}
+.step button:disabled{opacity:.35;cursor:default}
+.step output{min-width:36px;text-align:center;font-size:21px;font-weight:700}
+.btn--wa{min-height:64px;width:100%;white-space:normal;text-wrap:balance;text-align:center;line-height:1.2;padding:10px 20px;transition:background-color 200ms ease,opacity 300ms ease,transform 120ms var(--ease)}
+.btn--wa.off{opacity:.38;pointer-events:none}
+.alt{justify-self:center;display:inline-flex;align-items:center;min-height:48px;padding:0 12px;font-size:17px;font-weight:600;color:var(--cobalt);text-decoration:underline;text-underline-offset:4px}
+@media (max-width:900px){.bk{grid-template-columns:minmax(0,1fr)}.sum{position:static}}
+@media (max-width:734px){
+  .cal{padding:20px 12px;margin:0 calc(-1*var(--side) + 8px)}
+  .cal-top{padding:0 8px}
+  .legend{gap:14px}
+  .cal-nav{display:none}
+  .month{flex-basis:100%}
+  .months{gap:24px}
+  .upd{padding:0 8px}
+  .sum{margin:0 calc(-1*var(--side) + 8px);padding:20px 16px}
+  .btn--wa{font-size:18px}
+  .d span{width:min(42px,100%);margin:3px auto}
+}
+
+/* ── Telefono: sezioni più corte, tocchi da 48px ── */
+@media (max-width:734px){
+  body{font-size:19px}
+  .sec,.stats,.case,.fiere,.band{padding-top:72px}
+  .sec,.stats,.band{padding-bottom:72px}
+  .lead{font-size:20px}
+  .lang button{min-width:52px;min-height:46px;font-size:16px}
+  .lang{padding:3px}
+  .hero-act .link{min-height:48px}
+  .hz{margin-top:40px}
+  .hz-frame{aspect-ratio:4/3;border-radius:24px}
+  .chip{position:static;transform:none;margin:16px auto 0;width:max-content;max-width:calc(100% - 2*var(--side));background:var(--mist);box-shadow:none;border:0;font-size:17px;padding:10px 18px}
+  .chip .num{font-size:24px}
+  .cs{margin-top:40px;padding-bottom:56px}
+  .cs-stage{gap:48px}
+  .h-ph{border-radius:24px}
+  .thumbs{max-width:none;margin-top:16px}
+  .thumbs img{border-radius:16px}
+  .cs-go{margin-top:0}
+  .terr .h2{margin-top:72px!important}
+  .par{height:300px;margin-top:32px}
+  .par img{transform:none}
+  .route{margin-top:40px}
+  .route div{padding:22px}
+  .hs{margin-top:64px;padding-bottom:72px}
+  .hs-track{scroll-padding:0 var(--side);gap:12px}
+  .fc{width:78vw;min-height:300px;padding:28px}
+  .bento,.save{margin-top:40px}
+  .quotes{margin-top:56px;gap:40px}
+  .quotes blockquote:nth-child(3){display:none}
+  .faq summary{padding:22px 0;min-height:48px}
+  .faq .a{padding-right:0}
+  footer{padding-bottom:140px}
+}
+.fnote{font-size:17px;color:var(--grey)}
+.dock-sel{display:flex;align-items:center;gap:8px}
+.dock [hidden]{display:none!important}
+.dock-d{flex:1;min-width:0;display:grid;padding-left:14px;line-height:1.2;min-height:48px;align-content:center}
+.dock-d b{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock-d span{font-size:15px;color:var(--grey);white-space:nowrap}
+.dock.on-dark .dock-d{color:#fff}.dock.on-dark .dock-d span{color:var(--grey-dark)}
+.dock .dock-sel .btn{width:auto;flex:none;min-height:52px;padding:0 20px;font-size:17px}
+.dock.sel{border-radius:32px}
+html{scroll-padding-top:52px}
+
 /* comparse allo scorrimento */
 .motion .rv{opacity:0;transform:translateY(48px);transition:opacity 900ms ease,transform 1200ms var(--ease);transition-delay:calc(var(--d,0)*1ms)}
 .motion .rv.in{opacity:1;transform:none}
 
 @media (prefers-reduced-transparency:reduce){
-  .nav::before,.chip,.engine,.dock{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .nav::before,.chip,.dock{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 </style>
 </head>
@@ -322,8 +444,7 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
         <button type="button" data-l="it" aria-pressed="true">IT</button>
         <button type="button" data-l="en" aria-pressed="false">EN</button>
       </div>
-      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-      <a class="btn btn--sm" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+          <a class="btn btn--sm" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
     </div>
   </div>
 </header>
@@ -336,15 +457,14 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
     <h1 id="h1" data-split><span lang="it">Una casa intera, al prezzo di un hotel.</span><span lang="en">A whole home, for the price of a hotel.</span></h1>
     <p class="lead after" style="--d:80"><span lang="it">Cucina, lavatrice e WiFi, a 15 minuti dalla Fiera di Rho.</span><span lang="en">Kitchen, washer and WiFi, 15 minutes from the Rho Fair.</span></p>
     <div class="hero-act after" style="--d:180">
-      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-      <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+          <a class="btn" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
       <a class="link" href="#case"><span lang="it">Guarda le case</span><span lang="en">See the homes</span></a>
     </div>
     <p class="hero-note after" style="--d:260"><span lang="it">Su Booking e Airbnb siamo Terrace Apartments.</span><span lang="en">On Booking and Airbnb we are Terrace Apartments.</span></p>
   </div>
   <div class="hz" id="hz">
     <div class="hz-stage">
-      <div class="hz-frame" id="hz-frame"><img id="hz-img" src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" width="1400" height="935" fetchpriority="high"></div>
+      <div class="hz-frame" id="hz-frame"><img id="hz-img" src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" fetchpriority="high" width="1400" height="934"></div>
       <p class="chip" id="hz-chip"><i aria-hidden="true"></i><strong class="num">8,2</strong><span lang="it">su Booking, 166 recensioni</span><span lang="en">on Booking, 166 reviews</span></p>
     </div>
   </div>
@@ -378,30 +498,30 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
         <button type="button" role="tab" aria-selected="false" data-i="2">Confort</button>
       </div>
       <article class="house">
-        <figure class="h-ph"><img src="foto/rossa-soggiorno.jpg" alt="Soggiorno con cucina e parete rossa" width="1400" height="935"></figure>
+        <figure class="h-ph"><img src="foto/rossa-soggiorno.jpg" alt="Soggiorno con cucina e parete rossa" width="1400" height="935" loading="lazy" decoding="async"></figure>
         <div class="h-cap">
           <h3>Elegant</h3>
           <p class="beds"><span class="ok"><span lang="it">Fino a 4 ospiti, 1 camera matrimoniale e divano letto</span><span lang="en">Up to 4 guests, 1 double bedroom and sofa bed</span></span></p>
           <p class="am"><span lang="it">Cucina, Smart TV, aria condizionata e WiFi.</span><span lang="en">Kitchen, Smart TV, air conditioning and WiFi.</span></p>
-          <div class="thumbs"><img src="foto/rossa-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/rossa-cucina.jpg" alt="Cucina" loading="lazy"></div>
+          <div class="thumbs"><img src="foto/rossa-camera.jpg" alt="Camera matrimoniale" loading="lazy" width="1000" height="668"><img src="foto/rossa-cucina.jpg" alt="Cucina" loading="lazy" width="1000" height="668"></div>
         </div>
       </article>
       <article class="house">
-        <figure class="h-ph"><img src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" width="1400" height="935"></figure>
+        <figure class="h-ph"><img src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" width="1400" height="934" loading="lazy" decoding="async"></figure>
         <div class="h-cap">
           <h3>Modern</h3>
           <p class="beds"><span class="ok"><span lang="it">Fino a 5 ospiti, 2 camere e divano letto</span><span lang="en">Up to 5 guests, 2 bedrooms and sofa bed</span></span></p>
           <p class="am"><span lang="it">2 camere, cucina, lavatrice e WiFi.</span><span lang="en">2 bedrooms, kitchen, washing machine and WiFi.</span></p>
-          <div class="thumbs"><img src="foto/grigia-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/grigia-cucina.jpg" alt="Cucina" loading="lazy"></div>
+          <div class="thumbs"><img src="foto/grigia-camera.jpg" alt="Camera matrimoniale" loading="lazy" width="1000" height="667"><img src="foto/grigia-cucina.jpg" alt="Cucina" loading="lazy" width="1000" height="667"></div>
         </div>
       </article>
       <article class="house">
-        <figure class="h-ph"><img src="foto/chiara-soggiorno.jpg" alt="Soggiorno luminoso con divano" width="1400" height="935"></figure>
+        <figure class="h-ph"><img src="foto/chiara-soggiorno.jpg" alt="Soggiorno luminoso con divano" width="1400" height="935" loading="lazy" decoding="async"></figure>
         <div class="h-cap">
           <h3>Confort</h3>
           <p class="beds"><span class="ok"><span lang="it">Fino a 4 ospiti, 2 camere</span><span lang="en">Up to 4 guests, 2 bedrooms</span></span></p>
           <p class="am"><span lang="it">2 camere, cucina, aria condizionata e WiFi.</span><span lang="en">2 bedrooms, kitchen, air conditioning and WiFi.</span></p>
-          <div class="thumbs"><img src="foto/chiara-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/chiara-cucina.jpg" alt="Cucina con tavolo" loading="lazy"></div>
+          <div class="thumbs"><img src="foto/chiara-camera.jpg" alt="Camera matrimoniale" loading="lazy" width="1000" height="668"><img src="foto/chiara-cucina.jpg" alt="Cucina con tavolo" loading="lazy" width="1000" height="668"></div>
         </div>
       </article>
     </div>
@@ -413,18 +533,17 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
   <div class="wrap">
     <div class="cs-go rv">
       <p><span lang="it">Scegli le date e vedi quale casa è libera.</span><span lang="en">Pick your dates and see which home is free.</span></p>
-      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-      <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+          <a class="btn" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
     </div>
     <h2 class="h2 rv" id="h-terr" style="margin-top:clamp(96px,12vw,160px)"><span lang="it">Dopo la fiera, la terrazza.</span><span lang="en">After the fair, the terrace.</span></h2>
-    <figure class="par rv" id="par"><img src="foto/terrazza-tenda.jpg" alt="Terrazza con tenda da sole, lettini e vista sui tetti di Bareggio" loading="lazy"></figure>
+    <figure class="par rv" id="par"><img src="foto/terrazza-tenda.jpg" alt="Terrazza con tenda da sole, lettini e vista sui tetti di Bareggio" loading="lazy" width="1600" height="1069"></figure>
     <figcaption class="rv"><span lang="it">La terrazza, in comune tra le tre case.</span><span lang="en">The terrace, shared by the three homes.</span></figcaption>
     <div class="terr-row">
       <div class="rv">
         <p class="big"><span lang="it">Lettini, tavoli e barbecue all'aperto.</span><span lang="en">Sun loungers, tables and an outdoor barbecue.</span></p>
         <p><span lang="it">Bareggio è tranquilla: supermercato a 600 metri, osteria a 100.</span><span lang="en">Bareggio is quiet: a supermarket 600 metres away, a trattoria 100 metres away.</span></p>
       </div>
-      <figure class="rv" style="--d:120"><img src="foto/luci.jpg" alt="Lampadine sopra il tavolo in terrazza" loading="lazy">
+      <figure class="rv" style="--d:120"><img src="foto/luci.jpg" alt="Lampadine sopra il tavolo in terrazza" loading="lazy" width="1200" height="802">
         <figcaption><span lang="it">La sera, in terrazza.</span><span lang="en">Evenings on the terrace.</span></figcaption></figure>
     </div>
   </div>
@@ -464,8 +583,7 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
         <li class="fc"><time datetime="2027-11-09"><span class="d">9-14</span><span class="m"><span lang="it">novembre 2027</span><span lang="en">November 2027</span></span></time><p class="ev">EICMA<span class="ds"><span lang="it">Moto e due ruote</span><span lang="en">Motorcycles</span></span></p></li>
         <li class="fc"><time datetime="2027-11-17"><span class="d">17-20</span><span class="m"><span lang="it">novembre 2027</span><span lang="en">November 2027</span></span></time><p class="ev">MADE expo e Sicurezza<span class="ds"><span lang="it">Edilizia e sicurezza</span><span lang="en">Construction and security</span></span></p></li>
         <li class="fc cta"><p class="ev"><span lang="it">Vieni per una fiera?</span><span lang="en">Coming for a fair?</span><span class="ds"><span lang="it">Le case vanno via prima dei padiglioni.</span><span lang="en">The homes go before the halls fill up.</span></span></p>
-          <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-          <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a></li>
+                  <a class="btn" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a></li>
       </ol>
       <div class="hs-bar" aria-hidden="true"><i id="hs-bar"></i></div>
     </div>
@@ -478,14 +596,14 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
     <p class="eyebrow rv"><span lang="it">Per le aziende</span><span lang="en">For companies</span></p>
     <h2 class="h2 rv" id="h-az" style="--d:80"><span lang="it">Mandi qualcuno in trasferta? Ci pensiamo noi.</span><span lang="en">Sending someone on a work trip? We'll handle it.</span></h2>
     <div class="bento rv">
-      <figure class="tile ph s4 r2"><img src="foto/tavolo.jpg" alt="Soggiorno con tavolo da pranzo e smart TV" loading="lazy"></figure>
+      <figure class="tile ph s4 r2"><img src="foto/tavolo.jpg" alt="Soggiorno con tavolo da pranzo e smart TV" loading="lazy" width="1400" height="935"></figure>
       <div class="tile ink s2"><h3><span lang="it">Convenzione a prezzo fisso</span><span lang="en">Fixed-rate agreement</span></h3><p><span lang="it">Un prezzo deciso una volta, valido per tutte le trasferte dell'anno.</span><span lang="en">One rate agreed once, valid for every trip of the year.</span></p></div>
       <div class="tile s2"><h3><span lang="it">Fattura elettronica all'azienda</span><span lang="en">E-invoice to your company</span></h3><p><span lang="it">Intestata alla società, con la partita IVA, senza anticipi del dipendente.</span><span lang="en">Issued to the company with its VAT number, no out-of-pocket for the employee.</span></p></div>
       <div class="tile s3"><h3><span lang="it">Check-in online</span><span lang="en">Online check-in</span></h3><p><span lang="it">Documenti caricati prima di partire, poi ricevi le istruzioni per entrare.</span><span lang="en">ID uploaded before the trip, then you get the entry instructions.</span></p></div>
       <div class="tile s3"><h3><span lang="it">Un solo referente</span><span lang="en">One contact person</span></h3><p><span lang="it">Per date, cambi e fatture parli sempre con la stessa persona.</span><span lang="en">Dates, changes and invoices, always with the same person.</span></p></div>
     </div>
 
-    <!-- Modulo aziende: in anteprima NON invia nulla. Da collegare (CRM o email del brand) prima della messa online -->
+    <!-- Modulo aziende: apre WhatsApp col messaggio già scritto (nessun invio dal sito) -->
     <form class="lead-card rv" id="form-aziende" novalidate>
       <div>
         <h3><span lang="it">Chiedi la convenzione.</span><span lang="en">Ask for a company rate.</span></h3>
@@ -504,7 +622,7 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
           <select id="f-n" name="trasferte"><option>1-5</option><option>6-20</option><option>21-50</option><option>50+</option></select></div>
         <div class="f"><label for="f-note"><span lang="it">Periodo e persone (facoltativo)</span><span lang="en">Dates and people (optional)</span></label><textarea id="f-note" name="note"></textarea></div>
         <div><button class="btn" type="submit"><span lang="it">Ricevi la proposta</span><span lang="en">Get the proposal</span></button></div>
-        <p class="ok" role="status"><span lang="it">Anteprima: il modulo non invia ancora nulla.</span><span lang="en">Preview: this form does not send anything yet.</span></p>
+        <p class="fnote"><span lang="it">Si apre WhatsApp con la richiesta già scritta.</span><span lang="en">WhatsApp opens with your request already written.</span></p>
       </div>
     </form>
   </div>
@@ -515,12 +633,20 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
   <div class="wrap">
     <p class="eyebrow rv"><span lang="it">Prenota diretto</span><span lang="en">Book direct</span></p>
     <h2 class="h2 rv" id="h-dir" style="--d:80"><span lang="it">Ci hai trovato su Booking? Sono le stesse case.</span><span lang="en">Found us on Booking? Same homes.</span></h2>
-    <p class="lead rv" style="--d:160"><span lang="it">Su Booking e Airbnb siamo Terrace Apartments. Qui prenoti con noi, senza intermediari.</span><span lang="en">On Booking and Airbnb we are Terrace Apartments. Here you book with us, no middleman.</span></p>
+    <p class="lead rv" style="--d:160"><span lang="it">Su Booking e Airbnb siamo Terrace Apartments. Qui le prenoti direttamente, e paghi meno.</span><span lang="en">On Booking and Airbnb we are Terrace Apartments. Book them here directly and pay less.</span></p>
+    <div class="save rv">
+      <h3><span lang="it">Prenota diretto, risparmi il 10%.</span><span lang="en">Book direct, save 10%.</span></h3>
+      <div class="cmp">
+        <div class="was"><p class="lbl"><span lang="it">Su Airbnb o Booking, 3 notti</span><span lang="en">On Airbnb or Booking, 3 nights</span></p><p class="amt num"><s>282 €</s></p></div>
+        <div class="now"><p class="lbl"><span lang="it">Prenotando qui</span><span lang="en">Booking here</span></p><p class="amt num">254 €</p><p class="gain num"><span lang="it">risparmi 28 €</span><span lang="en">you save €28</span></p></div>
+      </div>
+      <p class="note"><span lang="it">Esempio su 3 notti al prezzo medio di 94 € a notte.</span><span lang="en">Example for 3 nights at the average price of €94 a night.</span></p>
+      <a class="btn" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+    </div>
     <div class="bento rv">
-      <div class="tile ink score s3 r3"><p class="big num" data-count="8.2" data-dec="1">8,2</p><p><span lang="it">su 10 da 166 recensioni Booking.com, 8,5 per chi viaggia per lavoro</span><span lang="en">out of 10 from 166 Booking.com reviews, 8.5 from business travellers</span></p></div>
+      <div class="tile ink score s3 r2"><p class="big num" data-count="8.2" data-dec="1">8,2</p><p><span lang="it">su 10 da 166 recensioni Booking.com, 8,5 per chi viaggia per lavoro</span><span lang="en">out of 10 from 166 Booking.com reviews, 8.5 from business travellers</span></p></div>
       <div class="tile white s3"><p class="k"><span lang="it">Fattura all'azienda</span><span lang="en">Invoice to your company</span></p><p><span lang="it">Ti fatturiamo direttamente con la partita IVA della tua azienda.</span><span lang="en">We invoice your company directly with its VAT number.</span></p></div>
       <div class="tile white s3"><p class="k"><span lang="it">Zero tassa di soggiorno</span><span lang="en">No city tax</span></p><p><span lang="it">Bareggio non applica l'imposta di soggiorno, a differenza di Milano.</span><span lang="en">Bareggio charges no tourist tax, unlike Milan.</span></p></div>
-      <div class="tile white s3"><p class="k"><span lang="it">Parli con noi</span><span lang="en">Talk to us</span></p><p><span lang="it">Orari, richieste e cambi li gestisci con chi le case le gestisce davvero.</span><span lang="en">Times, requests and changes go straight to the people who run the homes.</span></p></div>
     </div>
     <div class="quotes">
       <blockquote class="rv"><q>Posizione eccellente per raggiungere in poco tempo la zona stadio e fiera</q><cite>Leandro, Booking.com</cite></blockquote>
@@ -530,27 +656,44 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
   </div>
 </section>
 
-<!-- 8. PRENOTA: qui si monta il booking engine -->
-<section class="sec" aria-labelledby="h-book">
+<!-- 8. PRENOTA: calendario con le notti piene da Booking e Airbnb (disponibilita.json), richiesta su WhatsApp -->
+<section class="sec pren" id="prenota" aria-labelledby="h-book">
   <div class="wrap">
-    <div class="book rv">
-      <img src="foto/portico.jpg" alt="Il portico coperto sulla terrazza" loading="lazy">
-      <!--
-        #booking-engine: SEGNAPOSTO.
-        Si collegherà al booking engine di SmartPMS (Smartness), proprietà 146194:
-        il widget va montato in questo div, le prenotazioni dirette entrano nel gestionale da sole.
-        I campi qui sotto sono solo l'anteprima della forma.
-      -->
-      <div class="engine" id="booking-engine">
-        <p class="eyebrow"><span lang="it">Disponibilità</span><span lang="en">Availability</span></p>
-        <h2 id="h-book"><span lang="it">Verifica le date.</span><span lang="en">Check dates.</span></h2>
-        <div class="row2">
-          <div class="f"><label for="b-in">Check-in</label><input id="b-in" type="date"></div>
-          <div class="f"><label for="b-out">Check-out</label><input id="b-out" type="date"></div>
+    <p class="eyebrow rv"><span lang="it">Disponibilità</span><span lang="en">Availability</span></p>
+    <h2 class="h2 rv" id="h-book" style="--d:80"><span lang="it">Verifica le date.</span><span lang="en">Check dates.</span></h2>
+    <p class="lead rv" style="--d:160"><span lang="it">I giorni pieni sono già segnati. Tocca l'arrivo, poi la partenza.</span><span lang="en">Full nights are already marked. Tap your arrival, then your departure.</span></p>
+    <div class="bk rv">
+      <div class="cal" id="cal">
+        <div class="cal-top">
+          <ul class="legend" aria-label="Legenda">
+            <li><i class="lg-free"></i><span lang="it">Libero</span><span lang="en">Free</span></li>
+            <li><i class="lg-last"></i><span lang="it">Ultima casa</span><span lang="en">Last home</span></li>
+            <li><i class="lg-full">12</i><span lang="it">Pieno</span><span lang="en">Full</span></li>
+          </ul>
+          <div class="cal-nav">
+            <button type="button" class="arr" id="cal-prev" aria-label="Mese precedente"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="arr" id="cal-next" aria-label="Mese successivo"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
         </div>
-        <div class="f"><label for="b-g"><span lang="it">Ospiti</span><span lang="en">Guests</span></label><select id="b-g"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>
-        <button class="btn" type="button" id="b-go"><span lang="it">Vedi le case libere</span><span lang="en">See available homes</span></button>
-        <p class="tag"><span lang="it">Segnaposto: qui arriva il booking engine di SmartPMS.</span><span lang="en">Placeholder: the SmartPMS booking engine goes here.</span></p>
+        <div class="months" id="months" data-lenis-prevent tabindex="-1"></div>
+        <p class="upd" id="cal-upd" aria-live="polite"></p>
+      </div>
+      <div class="sum" id="sum">
+        <div class="pick">
+          <button type="button" class="slot" id="slot-in"><span class="sl"><span lang="it">Arrivo</span><span lang="en">Check-in</span></span><b id="v-in">&nbsp;</b></button>
+          <button type="button" class="slot" id="slot-out"><span class="sl"><span lang="it">Partenza</span><span lang="en">Check-out</span></span><b id="v-out">&nbsp;</b></button>
+        </div>
+        <p class="hint" id="hint" aria-live="polite"></p>
+        <div class="guests">
+          <span class="gl"><span lang="it">Ospiti</span><span lang="en">Guests</span></span>
+          <div class="step">
+            <button type="button" id="g-minus" aria-label="Un ospite in meno">&minus;</button>
+            <output id="g-n" class="num" aria-live="polite">2</output>
+            <button type="button" id="g-plus" aria-label="Un ospite in più">+</button>
+          </div>
+        </div>
+        <a class="btn btn--wa off" id="wa" href="#prenota" aria-disabled="true" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg><span lang="it">Richiedi queste date su WhatsApp</span><span lang="en">Request these dates on WhatsApp</span></a>
+        <a class="alt" id="bk-link" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Preferisci Booking?</span><span lang="en">Prefer Booking?</span></a>
       </div>
     </div>
   </div>
@@ -586,8 +729,7 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
 <!-- FASCIA FINALE: l'unico fondo cobalto della pagina -->
 <div class="band" id="band" role="region" aria-label="Prenota">
   <h2 class="rv"><span lang="it">La prossima trasferta parte da qui.</span><span lang="en">Your next work trip starts here.</span></h2>
-  <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-  <a class="btn btn--white rv" style="--d:120" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+  <a class="btn btn--white rv" style="--d:120" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
 </div>
 
 <footer aria-label="Contatti">
@@ -604,8 +746,11 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
 </footer>
 
 <div class="dock" id="dock">
-  <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
-  <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+  <a class="btn" id="dock-go" href="#prenota"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+  <div class="dock-sel" id="dock-sel" hidden>
+    <a class="dock-d" href="#prenota"><b id="dock-dates"></b><span id="dock-meta"></span></a>
+    <a class="btn btn--wa" id="dock-wa" href="#prenota" rel="noopener"><span lang="it">Richiedi su WhatsApp</span><span lang="en">Request on WhatsApp</span></a>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -633,36 +778,51 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
   $$('.lang button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
 
   /* Moduli in anteprima: non inviano nulla */
-  var f=$('#form-aziende'); f.addEventListener('submit',function(ev){ev.preventDefault();f.classList.add('sent')});
+  var f=$('#form-aziende'); f.addEventListener('submit',function(ev){ev.preventDefault();
+    var v=function(n){return (f.elements[n].value||'').trim()};
+    var it=root.lang==='it';
+    var t=(it?'Ciao, vorrei una convenzione per la mia azienda (dal sito smartlivingmilano.it).':'Hi, I would like a company rate (from smartlivingmilano.it).')+'\n'
+      +(it?'Nome: ':'Name: ')+v('nome')+'\n'+(it?'Azienda: ':'Company: ')+v('azienda')+'\nEmail: '+v('email')
+      +(v('telefono')?'\n'+(it?'Telefono: ':'Phone: ')+v('telefono'):'')+'\n'+(it?'Trasferte all\'anno: ':'Trips a year: ')+v('trasferte')
+      +(v('note')?'\n'+(it?'Note: ':'Notes: ')+v('note'):'');
+    window.open('https://wa.me/393516213753?text='+encodeURIComponent(t),'_blank','noopener');
+  });
 
   /* ── Nav che si compatta, barra in basso sul telefono ── */
   var nav=$('#nav'), dock=$('#dock'), hero=$('#hero'), band=$('#band');
+  var pren=$('#prenota .bk');
   function onScroll(){
     nav.classList.toggle('scrolled',scrollY>8);
-    var hb=$('.hero-act').getBoundingClientRect().bottom, bt=band.getBoundingClientRect().top;
-    dock.classList.toggle('on',hb<0 && bt>innerHeight);
+    var hb=$('.hero-act').getBoundingClientRect().bottom, bt=band.getBoundingClientRect().top, pr=pren.getBoundingClientRect();
+    var calInView=pr.top<innerHeight*.7 && pr.bottom>innerHeight*.3;
+    dock.classList.toggle('on',hb<0 && bt>innerHeight && !calInView);
   }
-  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll); onScroll();
+
+  /* ── Link interni: scorrimento morbido (Lenis sul computer, nativo sul telefono) ── */
+  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){
+    var id=a.getAttribute('href'); if(id.length<2)return; var t=$(id); if(!t)return;
+    e.preventDefault();
+    if(a.getAttribute('aria-disabled')==='true') return;
+    if(window.__lenis) window.__lenis.scrollTo(t,{offset:0,duration:1.2});
+    else t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  })});
 
   var motion=root.classList.contains('motion') && window.gsap && window.ScrollTrigger;
-  if(!motion){ root.classList.remove('motion'); $$('[data-count]').forEach(function(el){el.dataset.done=1; el.textContent=fmt(+el.dataset.count,+el.dataset.dec)}); return; }
+  if(!motion){ root.classList.remove('motion','scenes'); $$('[data-count]').forEach(function(el){el.dataset.done=1; el.textContent=fmt(+el.dataset.count,+el.dataset.dec)}); return; }
 
   gsap.registerPlugin(ScrollTrigger);
 
   /* ── Scorrimento morbido ── */
+  var scenes=root.classList.contains('scenes');
   var lenis=null;
-  if(window.Lenis){
+  if(scenes && window.Lenis){
     lenis=new Lenis({lerp:.1,wheelMultiplier:.9});
     lenis.on('scroll',ScrollTrigger.update);
     gsap.ticker.add(function(t){lenis.raf(t*1000)});
     gsap.ticker.lagSmoothing(0);
+    window.__lenis=lenis;
   }
-  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){
-    var id=a.getAttribute('href'); if(id.length<2)return; var t=$(id); if(!t)return;
-    e.preventDefault();
-    var off=t.id==='booking-engine'?-120:0;
-    if(lenis) lenis.scrollTo(t,{offset:off,duration:1.4}); else scrollTo({top:t.getBoundingClientRect().top+scrollY+off,behavior:'smooth'});
-  })});
 
   /* ── Titolo parola per parola ── */
   $$('[data-split] [lang]').forEach(function(sp){
@@ -688,6 +848,11 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
       el.textContent=fmt(to*k,dec); if(p<1)requestAnimationFrame(tick); else {el.dataset.done=1; el.textContent=fmt(to,dec)}})(t0);
   })},{threshold:.6});
   $$('[data-count]').forEach(function(el){co.observe(el)});
+
+  /* ── Nav scura sopra le sezioni nere ── */
+  $$('.dark').forEach(function(s){ScrollTrigger.create({trigger:s,start:'top 26px',end:'bottom 26px',toggleClass:{targets:[nav,dock],className:'on-dark'}})});
+  addEventListener('load',function(){ScrollTrigger.refresh()});
+  if(!scenes) return;
 
   /* ── Eroe: la foto si allarga fino allo schermo intero ── */
   var hz=$('#hz'), frame=$('#hz-frame'), img=$('#hz-img'), chip=$('#hz-chip');
@@ -729,10 +894,135 @@ footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--gr
     .fromTo(track,{x:0},{x:function(){return -dist()},ease:'none',duration:1},0)
     .fromTo('#hs-bar',{scaleX:0},{scaleX:1,ease:'none',duration:1},0);
 
-  /* ── Nav scura sopra le sezioni nere ── */
-  $$('.dark').forEach(function(s){ScrollTrigger.create({trigger:s,start:'top 26px',end:'bottom 26px',toggleClass:{targets:[nav,dock],className:'on-dark'}})});
+})();
+</script>
+<script>
+/* ── Calendario: notti occupate da Booking e Airbnb (disponibilita.json), richiesta su WhatsApp ──
+   disponibilita.json = {"case":3,"aggiornato":ISO,"occupate":{"YYYY-MM-DD":n}}: per ogni NOTTE quante case su 3 sono occupate (assente = 0).
+   Arrivo valido = notte con almeno una casa libera. Partenza valida = tutte le notti in mezzo con almeno una casa libera. */
+(function(){
+  var WA='393516213753', BK='https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html', MONTHS_AHEAD=12;
+  var root=document.documentElement, $=function(id){return document.getElementById(id)};
+  var box=$('months'), upd=$('cal-upd'), hint=$('hint'), wa=$('wa'), bk=$('bk-link');
+  var vin=$('v-in'), vout=$('v-out'), sIn=$('slot-in'), sOut=$('slot-out'), gN=$('g-n'), gM=$('g-minus'), gP=$('g-plus');
+  var dock=$('dock'), dGo=$('dock-go'), dSel=$('dock-sel'), dDates=$('dock-dates'), dMeta=$('dock-meta'), dWa=$('dock-wa');
+  var CASE=3, occ={}, aggiornato=null, loaded=false, start=null, end=null, guests=2;
 
-  addEventListener('load',function(){ScrollTrigger.refresh()});
+  function pad(n){return (n<10?'0':'')+n}
+  function key(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+  function addD(d,n){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);return x}
+  function parse(k){var p=k.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  function nights(a,b){return Math.round((b-a)/864e5)}
+  var today=new Date(); today=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+  function full(d){return (occ[key(d)]||0)>=CASE}
+  function last(d){return (occ[key(d)]||0)===CASE-1}
+  function canIn(d){return d>=today && !full(d)}
+  function maxOut(a){var d=addD(a,1), lim=addD(today,MONTHS_AHEAD*31);while(d<lim && !full(d)) d=addD(d,1);return d} /* la prima notte piena si può usare come giorno di partenza */
+  function L(){return root.lang==='en'?'en-GB':'it-IT'}
+  function it(){return root.lang!=='en'}
+  function fmtShort(d){return d.toLocaleDateString(L(),{weekday:'short',day:'numeric',month:'short'})}
+  function fmtLong(d){return d.toLocaleDateString(L(),{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+
+  /* ── Disegno dei mesi ── */
+  function build(){
+    var html='', wk=it()?['lun','mar','mer','gio','ven','sab','dom']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    for(var m=0;m<MONTHS_AHEAD;m++){
+      var first=new Date(today.getFullYear(),today.getMonth()+m,1), dim=new Date(first.getFullYear(),first.getMonth()+1,0).getDate();
+      var lead=(first.getDay()+6)%7;
+      html+='<div class="month" role="group" aria-label="'+first.toLocaleDateString(L(),{month:'long',year:'numeric'})+'"><h3>'+first.toLocaleDateString(L(),{month:'long',year:'numeric'})+'</h3><div class="wk" aria-hidden="true">'+wk.map(function(w){return '<span>'+w+'</span>'}).join('')+'</div><div class="days">';
+      for(var i=0;i<lead;i++) html+='<span></span>';
+      for(var day=1;day<=dim;day++){var d=new Date(first.getFullYear(),first.getMonth(),day);html+='<button type="button" class="d" data-k="'+key(d)+'"><span>'+day+'</span></button>'}
+      html+='</div></div>';
+    }
+    box.innerHTML=html; paint();
+  }
+  function paint(){
+    var mo=start&&!end?maxOut(start):null;
+    Array.prototype.forEach.call(box.querySelectorAll('.d'),function(b){
+      var d=parse(b.dataset.k), past=d<today, isFull=!past&&full(d), isLast=!past&&!isFull&&last(d);
+      var okOut=!!(mo && d>start && d<=mo);
+      var sel=start&&d.getTime()===start.getTime(), se=end&&d.getTime()===end.getTime(), inr=start&&end&&d>start&&d<end;
+      b.className='d'+(past?' past':'')+(isFull?' full':'')+(isLast?' last':'')+(okOut?' okout':'')+(sel?' s':'')+(se?' e':'')+(inr?' in':'')+(sel&&end?' has-e':'')
+        +(mo&&!okOut&&!sel&&d>start?' out':'')+(d.getTime()===today.getTime()?' today':'');
+      b.disabled=past || (mo? !(okOut||sel||canIn(d)) : !canIn(d) && !se);
+      var st=isFull?(it()?'pieno':'full'):isLast?(it()?'ultima casa libera':'last home free'):(it()?'libero':'free');
+      b.setAttribute('aria-label',fmtLong(d)+', '+st);
+      b.setAttribute('aria-pressed',sel||se?'true':'false');
+    });
+    summary();
+  }
+
+  /* ── Riepilogo, link WhatsApp e Booking, barra in basso ── */
+  function msg(){
+    var n=nights(start,end);
+    return it()
+      ? 'Ciao! Vorrei prenotare dal sito smartlivingmilano.it.\nArrivo: '+fmtLong(start)+'\nPartenza: '+fmtLong(end)+'\nNotti: '+n+'\nOspiti: '+guests+'\nC\'è una casa libera?'
+      : 'Hi! I would like to book from the website smartlivingmilano.it.\nCheck-in: '+fmtLong(start)+'\nCheck-out: '+fmtLong(end)+'\nNights: '+n+'\nGuests: '+guests+'\nIs a home available?';
+  }
+  function summary(){
+    vin.textContent=start?fmtShort(start):(it()?'Scegli':'Select');
+    vout.textContent=end?fmtShort(end):(start?(it()?'Scegli':'Select'):' ');
+    sIn.classList.toggle('act',!start); sOut.classList.toggle('act',!!start&&!end);
+    gN.textContent=guests; gM.disabled=guests<=1; gP.disabled=guests>=5;
+    var done=!!(start&&end);
+    if(!start) hint.textContent=it()?'Tocca il giorno di arrivo.':'Tap your arrival day.';
+    else if(!end) hint.textContent=it()?'Ora tocca il giorno di partenza.':'Now tap your departure day.';
+    else {var n=nights(start,end); hint.textContent=it()?(n+(n===1?' notte':' notti')+', '+guests+(guests===1?' ospite':' ospiti')):(n+(n===1?' night':' nights')+', '+guests+(guests===1?' guest':' guests'));}
+    var link=done?'https://wa.me/'+WA+'?text='+encodeURIComponent(msg()):'#prenota';
+    wa.href=link; wa.classList.toggle('off',!done); wa.setAttribute('aria-disabled',done?'false':'true');
+    if(done){wa.target='_blank'} else wa.removeAttribute('target');
+    bk.href=done?BK+'?checkin='+key(start)+'&checkout='+key(end)+'&group_adults='+guests:BK;
+    /* barra in basso: dopo la scelta mostra date + WhatsApp */
+    dGo.hidden=done; dSel.hidden=!done; dock.classList.toggle('sel',done);
+    if(done){
+      var o={day:'numeric',month:'short'};
+      dDates.textContent=start.toLocaleDateString(L(),o)+' → '+end.toLocaleDateString(L(),o);
+      var n2=nights(start,end); dMeta.textContent=it()?(n2+(n2===1?' notte':' notti')+', '+guests+(guests===1?' ospite':' ospiti')):(n2+(n2===1?' night':' nights')+', '+guests+(guests===1?' guest':' guests'));
+      dWa.href=link; dWa.target='_blank';
+    }
+  }
+
+  box.addEventListener('click',function(e){
+    var b=e.target.closest('.d'); if(!b||b.disabled) return;
+    var d=parse(b.dataset.k);
+    if(!start||end){ if(canIn(d)){start=d;end=null} }
+    else if(d<=start){ if(canIn(d)) start=d; }
+    else if(d<=maxOut(start)){ end=d; }
+    else if(canIn(d)){ start=d; end=null; }
+    paint();
+  });
+  sIn.addEventListener('click',function(){start=null;end=null;paint();scrollToMonth(0)});
+  sOut.addEventListener('click',function(){if(start){end=null;paint()}});
+  gM.addEventListener('click',function(){if(guests>1){guests--;summary()}});
+  gP.addEventListener('click',function(){if(guests<5){guests++;summary()}});
+
+  /* ── Frecce (computer) e swipe (telefono) ── */
+  var prev=$('cal-prev'), next=$('cal-next');
+  function step(){var m=box.querySelector('.month');return m?m.getBoundingClientRect().width+parseFloat(getComputedStyle(box).columnGap||0):box.clientWidth}
+  function scrollToMonth(i){box.scrollTo({left:i*step(),behavior:'smooth'})}
+  prev.addEventListener('click',function(){box.scrollBy({left:-step(),behavior:'smooth'})});
+  next.addEventListener('click',function(){box.scrollBy({left:step(),behavior:'smooth'})});
+  function arrows(){prev.disabled=box.scrollLeft<4; next.disabled=box.scrollLeft+box.clientWidth>=box.scrollWidth-4}
+  box.addEventListener('scroll',arrows,{passive:true});
+
+  /* ── Lingua: si ridisegna quando cambia ── */
+  new MutationObserver(function(){build();stamp();arrows()}).observe(root,{attributes:true,attributeFilter:['lang']});
+
+  function stamp(){
+    if(!loaded){upd.innerHTML=it()?'Disponibilità non caricata: scrivici su WhatsApp e ti diciamo noi.':'Availability not loaded: message us on WhatsApp.';return}
+    var a=new Date(aggiornato), o={timeZone:'Europe/Rome'};
+    var hm=a.toLocaleTimeString('it-IT',{timeZone:'Europe/Rome',hour:'2-digit',minute:'2-digit'});
+    var sameDay=a.toLocaleDateString('it-IT',o)===new Date().toLocaleDateString('it-IT',o);
+    var dd=a.toLocaleDateString(L(),{timeZone:'Europe/Rome',day:'numeric',month:'long'});
+    upd.innerHTML=it()?('Aggiornato con Booking e Airbnb '+(sameDay?'':'il '+dd+' ')+'alle <b>'+hm+'</b>'):('Synced with Booking and Airbnb '+(sameDay?'':'on '+dd+' ')+'at <b>'+hm+'</b>');
+  }
+
+  build(); arrows();
+  fetch('disponibilita.json?v='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    CASE=+j.case||3; occ=j.occupate||{}; aggiornato=j.aggiornato; loaded=!!aggiornato;
+    if(start&&!canIn(start)){start=null;end=null}
+    paint(); stamp();
+  }).catch(function(){loaded=false; stamp()});
 })();
 </script>
 </body>
