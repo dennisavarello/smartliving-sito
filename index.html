@@ -426,6 +426,18 @@ html{scroll-padding-top:52px}
 @media (prefers-reduced-transparency:reduce){
   .nav::before,.chip,.dock{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
 }
+
+/* 22 nov, Dennis: su telefono meno scritte, la foto subito dopo il pulsante */
+@media (max-width:735px){
+  .hero{padding-top:84px!important}
+  .hero .eyebrow,.hero .hero-act .link,.hero .hero-note{display:none!important}
+  .hero .hero-act{margin-top:20px}
+  .hero .hz{margin-top:24px}
+  main{display:flex;flex-direction:column}
+  #hero{order:0} #case{order:1} #diretto{order:2} #prenota{order:3} #fiere{order:4} #faq{order:5}
+  .stats,.terr,#aziende{display:none!important}
+  #case .lead,#fiere .lead,#diretto .lead,#prenota .lead{display:none}
+}
 </style>
 </head>
 <body>
