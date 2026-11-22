@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SmartLiving | Appartamenti a 15 minuti da Rho Fiera Milano</title>
+<meta name="description" content="Tre appartamenti a Bareggio, a 15 minuti da Rho Fiera Milano. Check-in online, fattura all'azienda. Prenota diretto.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FBFBFD">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="foto/grigia-soggiorno.jpg" as="image">
+<script>
+  /* Il movimento parte solo se il sistema non chiede «riduci movimento». Senza la classe, tutto è visibile e fermo. */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
+<style>
+/* ── Tokens «La Chiave», versione Apple ─────────────────────
+   cobalto #2B45E0  l'unico accento: pulsanti, link, la prossima fiera, la fascia finale
+   inchiostro #1D1D1F testo · grigio #6E6E73 testo secondario (4,9:1 sul bianco)
+   carta #FBFBFD · nebbia #F5F5F7 · nero #000 (sezioni alternate) · notte-tile #1D1D1F
+   Movimento: cubic-bezier(.32,.72,0,1), solo transform e opacity; le scene a scorrimento sono scrub lineari
+   ─────────────────────────────────────────────────────────── */
+:root{
+  --cobalt:#2B45E0; --cobalt-2:#1F35C4; --cobalt-soft:#8C9BF5;
+  --ink:#1D1D1F; --grey:#6E6E73; --paper:#FBFBFD; --mist:#F5F5F7; --line:#D2D2D7;
+  --black:#000; --tile-dark:#1D1D1F; --grey-dark:#A1A1A6;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --side:clamp(20px,5vw,40px); --wrap:1180px;
+  --kh:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 36'><circle cx='13' cy='10' r='10'/><path d='M7.5 15h11l4.5 21H3z'/></svg>");
+  --sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sf);font-size:21px;line-height:1.48;font-weight:500;letter-spacing:-.011em;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+html[lang="it"] [lang="en"]:not(html){display:none!important}
+html[lang="en"] [lang="it"]:not(html){display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.da-conf{text-decoration:underline dotted var(--cobalt) 2px;text-underline-offset:5px}
+.dark .da-conf{text-decoration-color:var(--cobalt-soft)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--side)}
+h1,h2,h3{font-weight:700;text-wrap:balance;color:inherit}
+p{text-wrap:pretty}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:600;color:var(--cobalt);letter-spacing:-.01em;margin-bottom:14px}
+.dark .eyebrow{color:var(--cobalt-soft)}
+.eyebrow::before{content:"";width:11px;height:15px;flex:none;background:currentColor;-webkit-mask:var(--kh) center/contain no-repeat;mask:var(--kh) center/contain no-repeat}
+.h2{font-size:clamp(40px,6.2vw,80px);line-height:1.04;letter-spacing:-.035em}
+.lead{font-size:clamp(21px,1.9vw,26px);line-height:1.4;color:var(--grey);font-weight:500;max-width:34em;margin-top:20px}
+.dark .lead{color:var(--grey-dark)}
+section{position:relative}
+
+/* ── Pulsanti ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 28px;border-radius:999px;background:var(--cobalt);color:#fff;font-size:19px;font-weight:600;letter-spacing:-.01em;border:0;cursor:pointer;transition:background-color 200ms ease,transform 120ms var(--ease);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn--white{background:#fff;color:var(--cobalt)}
+.btn--sm{min-height:36px;padding:0 16px;font-size:16px}
+.link{display:inline-flex;align-items:center;gap:6px;color:var(--cobalt);font-size:21px;font-weight:600}
+.link::after{content:"";width:8px;height:8px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg);transition:transform 200ms var(--ease)}
+.dark .link{color:var(--cobalt-soft)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:var(--cobalt-2)}
+  .btn--white:hover{background:#EEF0FD}
+  .link:hover::after{transform:translateX(3px) rotate(45deg)}
+}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:8px}
+
+/* ── Nav in vetro che si compatta ── */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:52px}
+.nav::before{content:"";position:absolute;inset:0;background:rgba(251,251,253,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);opacity:0;transform:scaleY(1.25);transform-origin:top;transition:opacity 400ms var(--ease),transform 500ms var(--ease),background-color 300ms ease}
+.nav.scrolled::before{opacity:1;transform:none}
+.nav-in{position:relative;height:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--side);display:flex;align-items:center;justify-content:space-between;gap:24px;transform:translateY(6px);transition:transform 500ms var(--ease)}
+.nav.scrolled .nav-in{transform:none}
+.brand{display:block;position:relative;width:128px;height:25px}
+.brand img{position:absolute;inset:0;width:100%;height:100%;transition:opacity 300ms ease}
+.brand .w{opacity:0}
+.nav-links{display:flex;gap:28px;font-size:17px;font-weight:500;color:var(--ink)}
+.nav-links a{opacity:.82;transition:opacity 200ms ease}
+.nav-links a:hover{opacity:1}
+.nav-r{display:flex;align-items:center;gap:16px}
+.lang{display:flex;background:rgba(0,0,0,.05);border-radius:999px;padding:3px}
+.lang button{border:0;background:none;cursor:pointer;font-size:15px;font-weight:600;padding:4px 10px;border-radius:999px;color:var(--grey);transition:background-color 200ms ease,color 200ms ease}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.nav.on-dark::before{background:rgba(22,22,23,.72);border-bottom-color:rgba(255,255,255,.08)}
+.nav.on-dark .brand .w{opacity:1}.nav.on-dark .brand .b{opacity:0}
+.nav.on-dark .nav-links{color:#F5F5F7}
+.nav.on-dark .lang{background:rgba(255,255,255,.12)}
+.nav.on-dark .lang button{color:var(--grey-dark)}
+.nav.on-dark .lang button[aria-pressed="true"]{background:#3A3A3C;color:#fff}
+@media (max-width:900px){.nav-links{display:none}}
+@media (max-width:480px){.nav .btn--sm{display:none}}
+
+/* ── Hero ── */
+.hero{padding:clamp(120px,16vh,168px) 0 0;text-align:center;background:var(--paper)}
+.hero .eyebrow{display:block;text-wrap:balance}
+.hero .eyebrow::before{display:inline-block;vertical-align:-1px;margin-right:10px}
+.hero h1{font-size:clamp(54px,9.4vw,140px);line-height:1;letter-spacing:-.045em;font-weight:700;max-width:12ch;margin:0 auto}
+.hero .lead{margin:24px auto 0;color:var(--grey);max-width:30em}
+.hero-act{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap}
+.hero-note{margin-top:22px;font-size:19px;color:var(--grey)}
+.bozza{display:inline-block;margin-top:10px;font-size:17px;color:var(--grey)}
+.bozza .da-conf{color:var(--ink)}
+/* parola per parola */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.wi{display:inline-block}
+.motion .hero .wi{transform:translateY(108%);opacity:0;transition:transform 1200ms var(--ease),opacity 700ms ease;transition-delay:calc(var(--i)*85ms + 120ms)}
+.motion .hero.in .wi{transform:none;opacity:1}
+.motion .hero .after{opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 1100ms var(--ease);transition-delay:calc(var(--d,0)*1ms + 560ms)}
+.motion .hero.in .after{opacity:1;transform:none}
+
+/* foto che si allarga allo schermo intero */
+.hz{position:relative;margin-top:56px}
+.hz-stage{position:relative}
+.hz-frame{position:relative;overflow:hidden;border-radius:28px;aspect-ratio:16/10;max-width:var(--wrap);margin:0 auto;width:calc(100% - 2*var(--side))}
+.hz-frame img{width:100%;height:100%;object-fit:cover}
+.chip{position:absolute;z-index:2;left:50%;bottom:28px;display:flex;align-items:center;gap:12px;padding:12px 22px 12px 18px;border-radius:999px;background:rgba(255,255,255,.66);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border:1px solid rgba(255,255,255,.6);box-shadow:0 8px 32px rgba(0,0,0,.12);font-size:19px;font-weight:600;white-space:nowrap;transform:translateX(-50%)}
+.chip .num{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.chip i{width:12px;height:17px;background:var(--cobalt);-webkit-mask:var(--kh) center/contain no-repeat;mask:var(--kh) center/contain no-repeat}
+.motion .hz{height:220vh;margin-top:var(--hz-m,0px)}
+.motion .hz-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;pointer-events:none}
+.motion .hz-frame{position:absolute;inset:0;width:100%;max-width:none;margin:0;aspect-ratio:auto;border-radius:0;will-change:transform}
+.motion .hz-frame img{will-change:transform}
+.motion .chip{bottom:40px}
+
+/* ── Numeri ── */
+.dark{background:var(--black);color:#F5F5F7}
+.stats{padding:clamp(96px,14vw,168px) 0}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:72px}
+.stat strong{display:block;font-size:clamp(84px,10vw,148px);line-height:.95;font-weight:700;letter-spacing:-.05em;color:#fff}
+.stat strong small{font-size:.36em;letter-spacing:-.02em;margin-left:6px;color:var(--grey-dark)}
+.stat>span{display:block;margin-top:18px;font-size:21px;color:var(--grey-dark);max-width:14em}
+.stat:first-child strong{color:#fff}
+@media (max-width:734px){.stats-grid{grid-template-columns:1fr;gap:56px;margin-top:56px}}
+
+/* ── Le case: riquadro fisso, tre case che si danno il cambio ── */
+.case{padding:clamp(96px,13vw,160px) 0 0;background:var(--paper)}
+.cs{margin-top:64px;padding-bottom:clamp(80px,10vw,120px)}
+.cs-stage{display:grid;gap:56px}
+.cs-tabs{display:none}
+.house{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:center}
+.h-ph{border-radius:28px;overflow:hidden;aspect-ratio:3/2;background:var(--mist)}
+.h-ph img{width:100%;height:100%;object-fit:cover}
+.h-cap h3{font-size:clamp(44px,5vw,72px);letter-spacing:-.04em;line-height:1}
+.h-cap .beds{margin-top:14px;font-size:21px;font-weight:600}
+.h-cap .am{margin-top:8px;font-size:19px;color:var(--grey)}
+.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;max-width:400px}
+.thumbs img{border-radius:20px;aspect-ratio:4/3;object-fit:cover;width:100%}
+.cs-go{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:56px}
+.cs-go p{font-size:21px;color:var(--grey)}
+@media (max-width:734px){.house{grid-template-columns:1fr;gap:20px}}
+
+.motion .cs{height:340vh;padding-bottom:0}
+.motion .cs-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:var(--wrap);margin:0 auto;padding:84px var(--side) 40px;
+  grid-template-columns:4fr 8fr;grid-template-rows:auto 1fr;grid-template-areas:"tabs ph" "cap ph";column-gap:56px;row-gap:40px;align-items:center}
+.motion .house{display:contents}
+.motion .h-ph{grid-area:ph;align-self:center;height:min(68vh,620px);aspect-ratio:auto;opacity:0;will-change:opacity}
+.motion .h-ph img{will-change:transform}
+.motion .h-cap{grid-area:cap;align-self:start;opacity:0;will-change:transform,opacity}
+.motion .house:first-of-type .h-ph,.motion .house:first-of-type .h-cap{opacity:1}
+.motion .cs-tabs{grid-area:tabs;align-self:end;display:inline-flex;justify-self:start;padding:4px;border-radius:999px;background:rgba(0,0,0,.05)}
+.cs-tabs button{border:0;background:none;cursor:pointer;font-size:17px;font-weight:600;padding:10px 20px;border-radius:999px;color:var(--grey);transition:background-color 300ms var(--ease),color 300ms ease,box-shadow 300ms ease}
+.cs-tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+@media (max-width:734px){
+  .motion .cs-stage{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"tabs" "ph" "cap";row-gap:20px;padding-top:72px;align-items:start}
+  .motion .cs-tabs{justify-self:center;align-self:start}
+  .motion .h-ph{height:44vh;height:44svh;align-self:start}
+  .motion .thumbs{display:none}
+}
+
+/* terrazza */
+.terr{padding:clamp(40px,6vw,80px) 0 clamp(96px,13vw,160px);background:var(--paper)}
+.par{border-radius:28px;overflow:hidden;height:clamp(360px,62vw,720px);margin-top:56px}
+.par img{width:100%;height:100%;object-fit:cover;transform:scale(1.18);will-change:transform}
+.terr-row{display:grid;grid-template-columns:5fr 4fr;gap:40px;margin-top:40px;align-items:start}
+.terr-row figure{border-radius:28px;overflow:hidden}
+.terr-row figure img{width:100%;aspect-ratio:4/3;object-fit:cover}
+figcaption{font-size:17px;color:var(--grey);margin-top:12px}
+.terr-row p{font-size:21px;color:var(--grey)}
+.terr-row .big{font-size:clamp(28px,3vw,40px);line-height:1.15;letter-spacing:-.025em;font-weight:700;color:var(--ink);margin-bottom:20px}
+@media (max-width:734px){.terr-row{grid-template-columns:1fr}}
+
+/* ── Fiere ── */
+.fiere{padding:clamp(96px,13vw,160px) 0 0}
+.route{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:64px}
+.route div{background:var(--tile-dark);border-radius:20px;padding:28px}
+.route b{display:block;font-size:21px;font-weight:600;color:#fff;margin-bottom:8px}
+.route p{font-size:19px;color:var(--grey-dark)}
+@media (max-width:1000px){.route{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.route{grid-template-columns:1fr}}
+.hs{margin-top:clamp(80px,10vw,128px);padding-bottom:clamp(96px,12vw,140px)}
+.hs-stage{display:flex;flex-direction:column;justify-content:center;gap:40px}
+.hs-head{max-width:var(--wrap);width:100%;margin:0 auto;padding:0 var(--side)}
+.hs-head h3{font-size:clamp(32px,4vw,56px);letter-spacing:-.035em;line-height:1.05}
+.hs-head p{font-size:17px;color:var(--grey-dark);margin-top:12px}
+.hs-track{display:flex;gap:20px;list-style:none;padding:0 var(--side);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.hs-track::-webkit-scrollbar{display:none}
+.fc{flex:none;scroll-snap-align:start;width:clamp(286px,28vw,380px);min-height:clamp(340px,42vh,400px);border-radius:28px;background:var(--tile-dark);padding:32px;display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.fc time{display:block}
+.fc .d{display:block;font-size:clamp(60px,6vw,80px);font-weight:700;letter-spacing:-.05em;line-height:.95;color:#fff}
+.fc .m{display:block;margin-top:10px;font-size:21px;font-weight:600;color:var(--grey-dark)}
+.fc .ev{font-size:28px;font-weight:700;letter-spacing:-.025em;line-height:1.1;color:#fff}
+.fc .ds{display:block;margin-top:8px;font-size:19px;font-weight:500;color:var(--grey-dark);letter-spacing:-.01em}
+.fc.next{background:var(--cobalt)}
+.fc.next .m,.fc.next .ds{color:rgba(255,255,255,.82)}
+.fc .tag{display:inline-block;font-size:17px;font-weight:600;color:#fff;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;margin-bottom:20px}
+.fc.cta{background:#fff;color:var(--ink);justify-content:space-between}
+.fc.cta .ev{color:var(--ink);font-size:36px}
+.hs-bar{max-width:var(--wrap);width:calc(100% - 2*var(--side));margin:0 auto;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;display:none}
+.hs-bar i{display:block;height:100%;background:#fff;transform:scaleX(0);transform-origin:left}
+.motion .hs{padding-bottom:0}
+.motion .hs-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;padding:60px 0 0}
+.motion .hs-track{overflow:visible;width:max-content;will-change:transform}
+.motion .hs-bar{display:block}
+
+/* ── Bento ── */
+.sec{padding:clamp(96px,13vw,160px) 0}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:64px}
+.tile{border-radius:28px;background:var(--mist);padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;justify-content:flex-end;min-height:280px}
+.tile h3{font-size:clamp(28px,2.6vw,40px);line-height:1.08;letter-spacing:-.03em}
+.tile p{font-size:19px;color:var(--grey);margin-top:12px}
+.tile.ph{padding:0;overflow:hidden}
+.tile.ph img{width:100%;height:100%;object-fit:cover}
+.tile.ink{background:var(--black);color:#fff}
+.tile.ink p{color:var(--grey-dark)}
+.tile.white{background:#fff}
+.r3{grid-row:span 3}#diretto .tile.white{min-height:0}
+.s2{grid-column:span 2}.s3{grid-column:span 3}.s4{grid-column:span 4}.r2{grid-row:span 2}
+@media (max-width:900px){.bento{grid-template-columns:1fr 1fr}.s2,.s3{grid-column:span 1}.s4{grid-column:span 2}.r2,.r3{grid-row:auto}.tile.ph{min-height:320px}}
+@media (max-width:560px){.bento{grid-template-columns:1fr}.s2,.s3,.s4{grid-column:auto}.tile{min-height:0}.tile.ph{min-height:280px}}
+
+/* modulo */
+.lead-card{margin-top:16px;border-radius:28px;background:var(--mist);padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:5fr 7fr;gap:56px}
+.lead-card h3{font-size:clamp(36px,4vw,56px);line-height:1.04;letter-spacing:-.035em}
+.lead-card .after{font-size:21px;color:var(--grey);margin-top:16px}
+.fields{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{min-width:0}
+.f label{display:block;font-size:17px;font-weight:600;margin-bottom:8px}
+.f input,.f select,.f textarea{width:100%;min-height:56px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:14px 16px;font-size:19px;font-weight:500;transition:border-color 200ms ease,box-shadow 200ms ease}
+.f textarea{min-height:104px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--cobalt);box-shadow:0 0 0 4px rgba(43,69,224,.16)}
+.ok{display:none;font-size:19px;color:var(--cobalt);font-weight:600}
+.sent .ok{display:block}
+@media (max-width:820px){.lead-card{grid-template-columns:1fr;gap:32px}}
+@media (max-width:480px){.row2{grid-template-columns:1fr}}
+
+/* diretto */
+.mist{background:var(--mist)}
+.tile.score{justify-content:space-between}
+.tile.ink .big{font-size:clamp(120px,14vw,200px);font-weight:700;letter-spacing:-.06em;line-height:1;color:#fff;margin:0}
+.score p{font-size:21px}
+.tile .k{font-size:clamp(28px,2.6vw,40px);line-height:1.08;letter-spacing:-.03em;font-weight:700;color:var(--ink)}
+.quotes{margin-top:96px;display:grid;gap:56px;max-width:960px}
+.quotes q{display:block;font-size:clamp(28px,3.4vw,44px);line-height:1.15;letter-spacing:-.03em;font-weight:700;quotes:"«" "»"}
+.quotes cite{display:block;margin-top:14px;font-style:normal;font-size:19px;color:var(--grey)}
+.quotes blockquote:nth-child(2){margin-left:clamp(0px,12vw,160px)}
+.quotes blockquote:nth-child(3){margin-left:clamp(0px,6vw,80px)}
+
+/* prenota: foto con il vetro sopra */
+.book{position:relative;border-radius:28px;overflow:hidden;min-height:680px;display:flex;align-items:center;justify-content:flex-end;padding:40px}
+.book>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.engine{position:relative;width:min(460px,100%);border-radius:28px;padding:40px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);border:1px solid rgba(255,255,255,.7);box-shadow:0 24px 64px rgba(0,0,0,.18);display:grid;gap:16px}
+.engine h2{font-size:clamp(36px,4vw,52px);letter-spacing:-.035em;line-height:1.02;margin-bottom:8px}
+.engine .eyebrow{margin-bottom:0}
+.engine .f input,.engine .f select{background:rgba(255,255,255,.9)}
+.engine .btn{width:100%;margin-top:8px}
+.engine .tag{font-size:17px;color:var(--grey)}
+@media (max-width:734px){
+  .book{display:block;padding:0;min-height:0;background:var(--mist)}
+  .book>img{position:relative;height:300px}
+  .engine{width:auto;margin:-72px 12px 12px;padding:28px}
+}
+
+/* FAQ */
+.faq{max-width:900px;margin-top:56px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 0;font-size:clamp(21px,2vw,26px);font-weight:600;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:20px;height:20px;background:linear-gradient(currentColor,currentColor) center/20px 2px no-repeat,linear-gradient(currentColor,currentColor) center/2px 20px no-repeat;color:var(--cobalt);transition:transform 400ms var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{font-size:21px;color:var(--grey);padding:0 48px 32px 0;max-width:46em}
+
+/* fascia finale */
+.band{background:var(--cobalt);color:#fff;text-align:center;padding:clamp(96px,13vw,160px) var(--side)}
+.band h2{font-size:clamp(44px,7vw,96px);letter-spacing:-.045em;line-height:1;max-width:12ch;margin:0 auto 40px}
+
+footer{background:var(--mist);padding:72px 0 120px;font-size:19px;color:var(--grey)}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+.foot b{display:block;color:var(--ink);font-weight:600;margin-bottom:8px}
+@media (max-width:734px){.foot{grid-template-columns:1fr}}
+
+/* barra in basso sul telefono */
+.dock{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:40;padding:8px;border-radius:999px;background:rgba(251,251,253,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 32px rgba(0,0,0,.14);transform:translateY(140%);opacity:0;transition:transform 600ms var(--ease),opacity 300ms ease}
+.dock .btn{width:100%}
+.dock.on-dark{background:rgba(29,29,31,.72);border-color:rgba(255,255,255,.1)}
+.dock.on{transform:none;opacity:1}
+@media (min-width:735px){.dock{display:none}}
+
+/* comparse allo scorrimento */
+.motion .rv{opacity:0;transform:translateY(48px);transition:opacity 900ms ease,transform 1200ms var(--ease);transition-delay:calc(var(--d,0)*1ms)}
+.motion .rv.in{opacity:1;transform:none}
+
+@media (prefers-reduced-transparency:reduce){
+  .nav::before,.chip,.engine,.dock{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#" aria-label="SmartLiving"><img class="b" src="logo/logo.svg" alt="SmartLiving" width="128" height="25"><img class="w" src="logo/logo-bianco.svg" alt="" width="128" height="25"></a>
+    <nav class="nav-links" aria-label="Sezioni">
+      <a href="#case"><span lang="it">Le case</span><span lang="en">Apartments</span></a>
+      <a href="#fiere"><span lang="it">Fiere di Rho</span><span lang="en">Rho Fair</span></a>
+      <a href="#aziende"><span lang="it">Aziende</span><span lang="en">Companies</span></a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-l="it" aria-pressed="true">IT</button>
+        <button type="button" data-l="en" aria-pressed="false">EN</button>
+      </div>
+      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+      <a class="btn btn--sm" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- 1. EROE: titolo parola per parola, poi la foto che si allarga a tutto schermo -->
+<section class="hero" id="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <p class="eyebrow after"><span lang="it">Bareggio, alle porte di Milano</span><span lang="en">Bareggio, on the edge of Milan</span></p>
+    <h1 id="h1" data-split><span lang="it">Altro che hotel. Una casa intera.</span><span lang="en">Forget the hotel. Get a whole home.</span></h1>
+    <p class="lead after" style="--d:80"><span lang="it">Per la fiera, per lavoro o per goderti Milano: tre appartamenti a 15 minuti da Rho Fiera, con check-in online.</span><span lang="en">For a fair, for work or to enjoy Milan: three apartments 15 minutes from Rho Fiera, with online check-in.</span></p>
+    <div class="hero-act after" style="--d:180">
+      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+      <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+      <a class="link" href="#case"><span lang="it">Guarda le case</span><span lang="en">See the homes</span></a>
+    </div>
+    <p class="hero-note after" style="--d:260"><span lang="it">Su Booking e Airbnb siamo Terrace Apartments.</span><span lang="en">On Booking and Airbnb we are Terrace Apartments.</span></p>
+  </div>
+  <div class="hz" id="hz">
+    <div class="hz-stage">
+      <div class="hz-frame" id="hz-frame"><img id="hz-img" src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" width="1400" height="935" fetchpriority="high"></div>
+      <p class="chip" id="hz-chip"><i aria-hidden="true"></i><strong class="num">8,2</strong><span lang="it">su Booking, 166 recensioni</span><span lang="en">on Booking, 166 reviews</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. I NUMERI che contano -->
+<section class="stats dark" aria-labelledby="h-num">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Perché qui</span><span lang="en">Why here</span></p>
+    <h2 class="h2 rv" id="h-num" style="--d:80"><span lang="it">Più spazio di un hotel, senza i costi delle app.</span><span lang="en">More room than a hotel, without the app fees.</span></h2>
+    <div class="stats-grid">
+      <div class="stat rv"><strong class="num"><span data-count="15" data-dec="0">15</span><small>min</small></strong><span><span lang="it">in auto dalla Fiera di Rho, fuori dal traffico di Milano</span><span lang="en">by car from the Rho Fair, away from Milan traffic</span></span></div>
+      <div class="stat rv" style="--d:120"><strong class="num">1<small>casa</small></strong><span><span lang="it">intera tutta per te: cucina, lavatrice e divano, non una stanza</span><span lang="en">all to yourself: kitchen, washer and sofa, not a room</span></span></div>
+      <div class="stat rv" style="--d:240"><strong class="num">0<small>€</small></strong><span><span lang="it">di costi di servizio se prenoti qui, invece che sulle app</span><span lang="en">in service fees when you book here instead of the apps</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. LE CASE: riquadro fisso, le tre case si danno il cambio scorrendo -->
+<section class="case" id="case" aria-labelledby="h-case">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Le case</span><span lang="en">The apartments</span></p>
+    <h2 class="h2 rv" id="h-case" style="--d:80"><span lang="it">Tre case intere, non stanze.</span><span lang="en">Three whole homes, not rooms.</span></h2>
+    <p class="lead rv" style="--d:160"><span lang="it">Ognuna con la sua cucina e il WiFi. Tutte e tre danno sulla stessa grande terrazza.</span><span lang="en">Each with its own kitchen and WiFi. All three open onto the same large terrace.</span></p>
+  </div>
+  <div class="cs" id="cs">
+    <div class="cs-stage wrap">
+      <div class="cs-tabs" role="tablist" aria-label="Le case">
+        <button type="button" role="tab" aria-selected="true" data-i="0">Elegant</button>
+        <button type="button" role="tab" aria-selected="false" data-i="1">Modern</button>
+        <button type="button" role="tab" aria-selected="false" data-i="2">Confort</button>
+      </div>
+      <article class="house">
+        <figure class="h-ph"><img src="foto/rossa-soggiorno.jpg" alt="Soggiorno con cucina e parete rossa" width="1400" height="935"></figure>
+        <div class="h-cap">
+          <h3>Elegant</h3>
+          <p class="beds"><span class="ok"><span lang="it">Fino a 4 ospiti, 1 camera matrimoniale e divano letto</span><span lang="en">Up to 4 guests, 1 double bedroom and sofa bed</span></span></p>
+          <p class="am"><span lang="it">Cucina, Smart TV, aria condizionata e WiFi.</span><span lang="en">Kitchen, Smart TV, air conditioning and WiFi.</span></p>
+          <div class="thumbs"><img src="foto/rossa-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/rossa-cucina.jpg" alt="Cucina" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="house">
+        <figure class="h-ph"><img src="foto/grigia-soggiorno.jpg" alt="Soggiorno grande con divano e zona pranzo" width="1400" height="935"></figure>
+        <div class="h-cap">
+          <h3>Modern</h3>
+          <p class="beds"><span class="ok"><span lang="it">Fino a 5 ospiti, 2 camere e divano letto</span><span lang="en">Up to 5 guests, 2 bedrooms and sofa bed</span></span></p>
+          <p class="am"><span lang="it">2 camere, cucina, lavatrice e WiFi.</span><span lang="en">2 bedrooms, kitchen, washing machine and WiFi.</span></p>
+          <div class="thumbs"><img src="foto/grigia-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/grigia-cucina.jpg" alt="Cucina" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="house">
+        <figure class="h-ph"><img src="foto/chiara-soggiorno.jpg" alt="Soggiorno luminoso con divano" width="1400" height="935"></figure>
+        <div class="h-cap">
+          <h3>Confort</h3>
+          <p class="beds"><span class="ok"><span lang="it">Fino a 4 ospiti, 2 camere</span><span lang="en">Up to 4 guests, 2 bedrooms</span></span></p>
+          <p class="am"><span lang="it">2 camere, cucina, aria condizionata e WiFi.</span><span lang="en">2 bedrooms, kitchen, air conditioning and WiFi.</span></p>
+          <div class="thumbs"><img src="foto/chiara-camera.jpg" alt="Camera matrimoniale" loading="lazy"><img src="foto/chiara-cucina.jpg" alt="Cucina con tavolo" loading="lazy"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. LA TERRAZZA -->
+<section class="terr" aria-labelledby="h-terr">
+  <div class="wrap">
+    <div class="cs-go rv">
+      <p><span lang="it">Scegli le date e vedi quale casa è libera.</span><span lang="en">Pick your dates and see which home is free.</span></p>
+      <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+      <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+    </div>
+    <h2 class="h2 rv" id="h-terr" style="margin-top:clamp(96px,12vw,160px)"><span lang="it">Dopo la fiera, la terrazza.</span><span lang="en">After the fair, the terrace.</span></h2>
+    <figure class="par rv" id="par"><img src="foto/terrazza-tenda.jpg" alt="Terrazza con tenda da sole, lettini e vista sui tetti di Bareggio" loading="lazy"></figure>
+    <figcaption class="rv"><span lang="it">La terrazza, in comune tra le tre case.</span><span lang="en">The terrace, shared by the three homes.</span></figcaption>
+    <div class="terr-row">
+      <div class="rv">
+        <p class="big"><span lang="it">Lettini, tavoli e barbecue all'aperto.</span><span lang="en">Sun loungers, tables and an outdoor barbecue.</span></p>
+        <p><span lang="it">Bareggio è tranquilla: supermercato a 600 metri, osteria a 100.</span><span lang="en">Bareggio is quiet: a supermarket 600 metres away, a trattoria 100 metres away.</span></p>
+      </div>
+      <figure class="rv" style="--d:120"><img src="foto/luci.jpg" alt="Lampadine sopra il tavolo in terrazza" loading="lazy">
+        <figcaption><span lang="it">La sera, in terrazza.</span><span lang="en">Evenings on the terrace.</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FIERE DI RHO: le date scorrono in orizzontale -->
+<section class="fiere dark" id="fiere" aria-labelledby="h-fiere">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Fiera Milano, Rho</span><span lang="en">Fiera Milano, Rho</span></p>
+    <h2 class="h2 rv" id="h-fiere" style="--d:80"><span lang="it">15 minuti dai padiglioni.</span><span lang="en">15 minutes from the halls.</span></h2>
+    <p class="lead rv" style="--d:160"><span lang="it">12,4 km in auto dalla Fiera di Rho, senza la tassa di soggiorno di Milano.</span><span lang="en">12.4 km by car from the Rho Fair, without Milan's tourist tax.</span></p>
+    <div class="route rv">
+      <div><b><span lang="it">In auto</span><span lang="en">By car</span></b><p><span lang="it">Circa 15 minuti fino ai parcheggi della Fiera.</span><span lang="en">About 15 minutes to the Fair car parks.</span></p></div>
+      <div><b><span lang="it">Con i mezzi</span><span lang="en">By public transport</span></b><p><span lang="it">Bus fino a Molino Dorino, poi metro rossa M1 fino a Rho Fiera.</span><span lang="en">Bus to Molino Dorino, then the red M1 metro line to Rho Fiera.</span></p></div>
+      <div><b><span lang="it">Aeroporti</span><span lang="en">Airports</span></b><p><span lang="it">Linate a 24 km, Malpensa a 29 km.</span><span lang="en">Linate 24 km, Malpensa 29 km.</span></p></div>
+      <div><b><span lang="it">Milano</span><span lang="en">Milan</span></b><p><span lang="it">San Siro a 11 km, il Duomo a 17 km.</span><span lang="en">San Siro 11 km, the Duomo 17 km.</span></p></div>
+    </div>
+  </div>
+
+  <div class="hs" id="hs">
+    <div class="hs-stage">
+      <div class="hs-head">
+        <h3><span lang="it">Le prossime fiere a Rho.</span><span lang="en">Upcoming fairs in Rho.</span></h3>
+        <p><span lang="it">Date dal calendario ufficiale di fieramilano.it, controllate il 20 novembre 2026.</span><span lang="en">Dates from the official fieramilano.it calendar, checked on 20 November 2026.</span></p>
+      </div>
+      <ol class="hs-track" id="hs-track">
+        <li class="fc next"><div><span class="tag"><span lang="it">La prossima</span><span lang="en">Next up</span></span><time datetime="2026-12-05"><span class="d">5-13</span><span class="m"><span lang="it">dicembre 2026</span><span lang="en">December 2026</span></span></time></div><p class="ev">Artigiano in Fiera<span class="ds"><span lang="it">Artigianato da tutto il mondo</span><span lang="en">Crafts from around the world</span></span></p></li>
+        <li class="fc"><time datetime="2027-01-21"><span class="d">21-24</span><span class="m"><span lang="it">gennaio 2027</span><span lang="en">January 2027</span></span></time><p class="ev">Milano Home<span class="ds"><span lang="it">Casa e arredo</span><span lang="en">Home and living</span></span></p></li>
+        <li class="fc"><time datetime="2027-02-06"><span class="d">6-8</span><span class="m"><span lang="it">febbraio 2027</span><span lang="en">February 2027</span></span></time><p class="ev">MIDO<span class="ds"><span lang="it">Occhialeria</span><span lang="en">Eyewear</span></span></p></li>
+        <li class="fc"><time datetime="2027-02-21"><span class="d">21-23</span><span class="m"><span lang="it">febbraio 2027</span><span lang="en">February 2027</span></span></time><p class="ev">MICAM e MIPEL<span class="ds"><span lang="it">Calzature e pelletteria</span><span lang="en">Footwear and leather goods</span></span></p></li>
+        <li class="fc"><time datetime="2027-02-23"><span class="d">23-25</span><span class="m"><span lang="it">febbraio 2027</span><span lang="en">February 2027</span></span></time><p class="ev">Lineapelle<span class="ds"><span lang="it">Pelli e materiali per la moda</span><span lang="en">Leather and fashion materials</span></span></p></li>
+        <li class="fc"><time datetime="2027-04-13"><span class="d">13-18</span><span class="m"><span lang="it">aprile 2027</span><span lang="en">April 2027</span></span></time><p class="ev">Salone del Mobile<span class="ds"><span lang="it">Con Euroluce e Workplace 3.0</span><span lang="en">With Euroluce and Workplace 3.0</span></span></p></li>
+        <li class="fc"><time datetime="2027-05-11"><span class="d">11-14</span><span class="m"><span lang="it">maggio 2027</span><span lang="en">May 2027</span></span></time><p class="ev">Made in Steel e Lamiera<span class="ds"><span lang="it">Acciaio e lavorazione della lamiera</span><span lang="en">Steel and sheet metal</span></span></p></li>
+        <li class="fc"><time datetime="2027-05-25"><span class="d">25-28</span><span class="m"><span lang="it">maggio 2027</span><span lang="en">May 2027</span></span></time><p class="ev">Print4All<span class="ds"><span lang="it">Stampa e packaging</span><span lang="en">Printing and packaging</span></span></p></li>
+        <li class="fc"><time datetime="2027-10-04"><span class="d">4-8</span><span class="m"><span lang="it">ottobre 2027</span><span lang="en">October 2027</span></span></time><p class="ev">EMO Milano<span class="ds"><span lang="it">Macchine utensili</span><span lang="en">Machine tools</span></span></p></li>
+        <li class="fc"><time datetime="2027-10-22"><span class="d">22-26</span><span class="m"><span lang="it">ottobre 2027</span><span lang="en">October 2027</span></span></time><p class="ev">HostMilano<span class="ds"><span lang="it">Ospitalità e ristorazione</span><span lang="en">Hospitality and food service</span></span></p></li>
+        <li class="fc"><time datetime="2027-11-09"><span class="d">9-14</span><span class="m"><span lang="it">novembre 2027</span><span lang="en">November 2027</span></span></time><p class="ev">EICMA<span class="ds"><span lang="it">Moto e due ruote</span><span lang="en">Motorcycles</span></span></p></li>
+        <li class="fc"><time datetime="2027-11-17"><span class="d">17-20</span><span class="m"><span lang="it">novembre 2027</span><span lang="en">November 2027</span></span></time><p class="ev">MADE expo e Sicurezza<span class="ds"><span lang="it">Edilizia e sicurezza</span><span lang="en">Construction and security</span></span></p></li>
+        <li class="fc cta"><p class="ev"><span lang="it">Vieni per una fiera?</span><span lang="en">Coming for a fair?</span><span class="ds"><span lang="it">Le case vanno via prima dei padiglioni.</span><span lang="en">The homes go before the halls fill up.</span></span></p>
+          <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+          <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a></li>
+      </ol>
+      <div class="hs-bar" aria-hidden="true"><i id="hs-bar"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. AZIENDE: bento -->
+<section class="sec" id="aziende" aria-labelledby="h-az">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Per le aziende</span><span lang="en">For companies</span></p>
+    <h2 class="h2 rv" id="h-az" style="--d:80"><span lang="it">Mandi qualcuno in trasferta? Ci pensiamo noi.</span><span lang="en">Sending someone on a work trip? We'll handle it.</span></h2>
+    <div class="bento rv">
+      <figure class="tile ph s4 r2"><img src="foto/tavolo.jpg" alt="Soggiorno con tavolo da pranzo e smart TV" loading="lazy"></figure>
+      <div class="tile ink s2"><h3><span lang="it">Convenzione a prezzo fisso</span><span lang="en">Fixed-rate agreement</span></h3><p><span lang="it">Un prezzo deciso una volta, valido per tutte le trasferte dell'anno.</span><span lang="en">One rate agreed once, valid for every trip of the year.</span></p></div>
+      <div class="tile s2"><h3><span lang="it">Fattura elettronica all'azienda</span><span lang="en">E-invoice to your company</span></h3><p><span lang="it">Intestata alla società, con la partita IVA, senza anticipi del dipendente.</span><span lang="en">Issued to the company with its VAT number, no out-of-pocket for the employee.</span></p></div>
+      <div class="tile s3"><h3><span lang="it">Check-in online</span><span lang="en">Online check-in</span></h3><p><span lang="it">Documenti caricati prima di partire, poi ricevi le istruzioni per entrare.</span><span lang="en">ID uploaded before the trip, then you get the entry instructions.</span></p></div>
+      <div class="tile s3"><h3><span lang="it">Un solo referente</span><span lang="en">One contact person</span></h3><p><span lang="it">Per date, cambi e fatture parli sempre con la stessa persona.</span><span lang="en">Dates, changes and invoices, always with the same person.</span></p></div>
+    </div>
+
+    <!-- Modulo aziende: in anteprima NON invia nulla. Da collegare (CRM o email del brand) prima della messa online -->
+    <form class="lead-card rv" id="form-aziende" novalidate>
+      <div>
+        <h3><span lang="it">Chiedi la convenzione.</span><span lang="en">Ask for a company rate.</span></h3>
+        <p class="after"><span lang="it">Ti rispondiamo entro un giorno lavorativo con il prezzo per la tua azienda.</span><span lang="en">We reply within one working day with your company rate.</span></p>
+      </div>
+      <div class="fields">
+        <div class="row2">
+          <div class="f"><label for="f-nome"><span lang="it">Nome e cognome</span><span lang="en">Full name</span></label><input id="f-nome" name="nome" autocomplete="name" required></div>
+          <div class="f"><label for="f-az"><span lang="it">Azienda</span><span lang="en">Company</span></label><input id="f-az" name="azienda" autocomplete="organization" required></div>
+        </div>
+        <div class="row2">
+          <div class="f"><label for="f-mail">Email</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+          <div class="f"><label for="f-tel"><span lang="it">Telefono</span><span lang="en">Phone</span></label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div>
+        </div>
+        <div class="f"><label for="f-n"><span lang="it">Quante trasferte all'anno, più o meno?</span><span lang="en">Roughly how many trips a year?</span></label>
+          <select id="f-n" name="trasferte"><option>1-5</option><option>6-20</option><option>21-50</option><option>50+</option></select></div>
+        <div class="f"><label for="f-note"><span lang="it">Periodo e persone (facoltativo)</span><span lang="en">Dates and people (optional)</span></label><textarea id="f-note" name="note"></textarea></div>
+        <div><button class="btn" type="submit"><span lang="it">Ricevi la proposta</span><span lang="en">Get the proposal</span></button></div>
+        <p class="ok" role="status"><span lang="it">Anteprima: il modulo non invia ancora nulla.</span><span lang="en">Preview: this form does not send anything yet.</span></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 7. PERCHÉ DIRETTO: bento + recensioni -->
+<section class="sec mist" id="diretto" aria-labelledby="h-dir">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Prenota diretto</span><span lang="en">Book direct</span></p>
+    <h2 class="h2 rv" id="h-dir" style="--d:80"><span lang="it">Ci hai trovato su Booking? Sono le stesse case.</span><span lang="en">Found us on Booking? Same homes.</span></h2>
+    <p class="lead rv" style="--d:160"><span lang="it">Su Booking e Airbnb siamo Terrace Apartments. Qui prenoti con noi, senza intermediari.</span><span lang="en">On Booking and Airbnb we are Terrace Apartments. Here you book with us, no middleman.</span></p>
+    <div class="bento rv">
+      <div class="tile ink score s3 r3"><p class="big num" data-count="8.2" data-dec="1">8,2</p><p><span lang="it">su 10 da 166 recensioni Booking.com, 8,5 per chi viaggia per lavoro</span><span lang="en">out of 10 from 166 Booking.com reviews, 8.5 from business travellers</span></p></div>
+      <div class="tile white s3"><p class="k"><span lang="it">Senza costi di servizio</span><span lang="en">No service fees</span></p><p><span lang="it">Prenoti direttamente con noi, senza i costi di servizio delle app.</span><span lang="en">Book directly with us, without the app service fees.</span></p></div>
+      <div class="tile white s3"><p class="k"><span lang="it">Zero tassa di soggiorno</span><span lang="en">No city tax</span></p><p><span lang="it">Bareggio non applica l'imposta di soggiorno, a differenza di Milano.</span><span lang="en">Bareggio charges no tourist tax, unlike Milan.</span></p></div>
+      <div class="tile white s3"><p class="k"><span lang="it">Parli con noi</span><span lang="en">Talk to us</span></p><p><span lang="it">Orari, richieste e cambi li gestisci con chi le case le gestisce davvero.</span><span lang="en">Times, requests and changes go straight to the people who run the homes.</span></p></div>
+    </div>
+    <div class="quotes">
+      <blockquote class="rv"><q>Posizione eccellente per raggiungere in poco tempo la zona stadio e fiera</q><cite>Leandro, Booking.com</cite></blockquote>
+      <blockquote class="rv"><q>Appartamentino nuovo, molto spazioso. Davvero carino ampio terrazzo.</q><cite>Tiziana, Booking.com</cite></blockquote>
+      <blockquote class="rv"><q>Molto comodo per chi deve partire od arriva a Malpensa.</q><cite>Fuzzetto, Booking.com</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- 8. PRENOTA: qui si monta il booking engine -->
+<section class="sec" aria-labelledby="h-book">
+  <div class="wrap">
+    <div class="book rv">
+      <img src="foto/portico.jpg" alt="Il portico coperto sulla terrazza" loading="lazy">
+      <!--
+        #booking-engine: SEGNAPOSTO.
+        Si collegherà al booking engine di SmartPMS (Smartness), proprietà 146194:
+        il widget va montato in questo div, le prenotazioni dirette entrano nel gestionale da sole.
+        I campi qui sotto sono solo l'anteprima della forma.
+      -->
+      <div class="engine" id="booking-engine">
+        <p class="eyebrow"><span lang="it">Disponibilità</span><span lang="en">Availability</span></p>
+        <h2 id="h-book"><span lang="it">Verifica le date.</span><span lang="en">Check dates.</span></h2>
+        <div class="row2">
+          <div class="f"><label for="b-in">Check-in</label><input id="b-in" type="date"></div>
+          <div class="f"><label for="b-out">Check-out</label><input id="b-out" type="date"></div>
+        </div>
+        <div class="f"><label for="b-g"><span lang="it">Ospiti</span><span lang="en">Guests</span></label><select id="b-g"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <button class="btn" type="button" id="b-go"><span lang="it">Vedi le case libere</span><span lang="en">See available homes</span></button>
+        <p class="tag"><span lang="it">Segnaposto: qui arriva il booking engine di SmartPMS.</span><span lang="en">Placeholder: the SmartPMS booking engine goes here.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section class="sec" id="faq" style="padding-top:0" aria-labelledby="h-faq">
+  <div class="wrap">
+    <p class="eyebrow rv">FAQ</p>
+    <h2 class="h2 rv" id="h-faq" style="--d:80"><span lang="it">Le domande di chi arriva.</span><span lang="en">What guests ask first.</span></h2>
+    <div class="faq rv">
+      <details><summary><span lang="it">Come funziona il check-in?</span><span lang="en">How does check-in work?</span></summary>
+        <p class="a"><span lang="it">Prima di arrivare fai il check-in online e carichi i documenti, che per legge vanno comunicati alla Questura. Poi ricevi le istruzioni per entrare in casa.</span><span lang="en">Before arriving you check in online and upload your ID, which Italian law requires us to register with the police. Then you receive the instructions to get in.</span></p></details>
+      <details><summary><span lang="it">A che ora posso arrivare e ripartire?</span><span lang="en">What are the check-in and check-out times?</span></summary>
+        <p class="a"><span lang="it">Si entra dalle 15:00 e si lascia la casa entro le 10:00.</span><span lang="en">Check-in from 3 pm, check-out by 10 am.</span></p></details>
+      <details><summary><span lang="it">Potete fatturare alla mia azienda?</span><span lang="en">Can you invoice my company?</span></summary>
+        <p class="a"><span lang="it">Sì. Emettiamo fattura elettronica intestata alla società: basta indicare ragione sociale e partita IVA al momento della prenotazione.</span><span lang="en">Yes. We issue an Italian e-invoice to your company: just give us the company name and VAT number when you book.</span></p></details>
+      <details><summary><span lang="it">Posso cancellare?</span><span lang="en">Can I cancel?</span></summary>
+        <p class="a"><span class="ok"><span lang="it">Dipende dalla tariffa che scegli: la flessibile si cancella gratis fino a pochi giorni prima, quella non rimborsabile costa meno. Le condizioni esatte le vedi prima di pagare.</span><span lang="en">It depends on the rate: the flexible one can be cancelled for free up to a few days before, the non-refundable one costs less. You see the exact terms before paying.</span></span></p></details>
+      <details><summary><span lang="it">Quanto ci metto ad arrivare in Fiera?</span><span lang="en">How long to the Fair?</span></summary>
+        <p class="a"><span lang="it">In auto circa 15 minuti (12,4 km). Con i mezzi prendi il bus fino a Molino Dorino e poi la metro rossa M1 fino a Rho Fiera.</span><span lang="en">About 15 minutes by car (12.4 km). By public transport, take the bus to Molino Dorino, then the red M1 metro line to Rho Fiera.</span></p></details>
+      <details><summary><span lang="it">Si può lavorare da casa?</span><span lang="en">Can I work from the apartment?</span></summary>
+        <p class="a"><span lang="it">Il WiFi è gratuito in tutte e tre le case e su Booking gli ospiti gli danno 9 su 10.</span><span lang="en">WiFi is free in all three homes and guests rate it 9 out of 10 on Booking.</span></p></details>
+      <details><summary><span lang="it">Si paga la tassa di soggiorno?</span><span lang="en">Is there a tourist tax?</span></summary>
+        <p class="a"><span lang="it">No. Il comune di Bareggio non ha l'imposta di soggiorno, quindi non ci sono costi da pagare all'arrivo.</span><span lang="en">No. The town of Bareggio has no tourist tax, so there is nothing extra to pay on arrival.</span></p></details>
+      <details><summary><span lang="it">Gli animali sono ammessi?</span><span lang="en">Are pets allowed?</span></summary>
+        <p class="a"><span lang="it">Sì, su richiesta. Scrivici prima di prenotare: potrebbe esserci un piccolo supplemento per la pulizia.</span><span lang="en">Yes, on request. Message us before booking: a small cleaning supplement may apply.</span></p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FASCIA FINALE: l'unico fondo cobalto della pagina -->
+<div class="band" id="band" role="region" aria-label="Prenota">
+  <h2 class="rv"><span lang="it">La prossima trasferta parte da qui.</span><span lang="en">Your next work trip starts here.</span></h2>
+  <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+  <a class="btn btn--white rv" style="--d:120" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+</div>
+
+<footer aria-label="Contatti">
+  <div class="wrap foot">
+    <div style="display:grid;gap:20px;align-content:start">
+      <img src="logo/logo.svg" alt="SmartLiving" width="180" height="35">
+      <p style="max-width:28em"><span lang="it">Appartamenti a Bareggio per chi viene alle fiere di Rho, per chi è in trasferta e per chi vuole godersi Milano.</span><span lang="en">Apartments in Bareggio for trade-fair visitors, business travellers and anyone who wants to enjoy Milan.</span></p>
+    </div>
+    <div><b><span lang="it">Dove siamo</span><span lang="en">Where we are</span></b><p>Via Monte Rosa 1<br>20008 Bareggio (MI)</p>
+      <p style="margin-top:12px"><span lang="it">Su Booking e Airbnb: Terrace Apartments</span><span lang="en">On Booking and Airbnb: Terrace Apartments</span></p></div>
+    <div><b><span lang="it">Gestito da</span><span lang="en">Run by</span></b><p>Dennis Avarello Consulting srls<br>P.IVA 13738320962</p>
+      <p style="margin-top:12px" class="ok"><span lang="it">Email e telefono in arrivo</span><span lang="en">Email and phone coming soon</span></p></div>
+  </div>
+</footer>
+
+<div class="dock" id="dock">
+  <!-- Si collegherà al booking engine di SmartPMS (Smartness) -->
+  <a class="btn" href="https://www.booking.com/hotel/it/three-room-apartment-with-terrace-free-wifi.it.html" target="_blank" rel="noopener"><span lang="it">Verifica le date</span><span lang="en">Check dates</span></a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  /* ── Lingua ── */
+  function fmt(n,dec){var s=n.toFixed(dec);return root.lang==='it'?s.replace('.',','):s}
+  function setLang(l){
+    root.lang=l;
+    $$('.lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.l===l?'true':'false')});
+    document.title=l==='en'?'SmartLiving | Apartments 15 minutes from Rho Fiera Milano':'SmartLiving | Appartamenti a 15 minuti da Rho Fiera Milano';
+    $$('[data-count]').forEach(function(el){if(el.dataset.done)el.textContent=fmt(+el.dataset.count,+el.dataset.dec)});
+    try{localStorage.setItem('sl-lang',l)}catch(e){}
+    if(window.ScrollTrigger)ScrollTrigger.refresh();
+  }
+  var saved=null; try{saved=localStorage.getItem('sl-lang')}catch(e){}
+  if(!saved){saved=(navigator.language||'it').slice(0,2)==='it'?'it':'en'}
+  var q=new URLSearchParams(location.search).get('lang'); if(q==='it'||q==='en') saved=q;
+  setLang(saved);
+  $$('.lang button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
+
+  /* Moduli in anteprima: non inviano nulla */
+  var f=$('#form-aziende'); f.addEventListener('submit',function(ev){ev.preventDefault();f.classList.add('sent')});
+
+  /* ── Nav che si compatta, barra in basso sul telefono ── */
+  var nav=$('#nav'), dock=$('#dock'), hero=$('#hero'), band=$('#band');
+  function onScroll(){
+    nav.classList.toggle('scrolled',scrollY>8);
+    var hb=$('.hero-act').getBoundingClientRect().bottom, bt=band.getBoundingClientRect().top;
+    dock.classList.toggle('on',hb<0 && bt>innerHeight);
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var motion=root.classList.contains('motion') && window.gsap && window.ScrollTrigger;
+  if(!motion){ root.classList.remove('motion'); $$('[data-count]').forEach(function(el){el.dataset.done=1; el.textContent=fmt(+el.dataset.count,+el.dataset.dec)}); return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Scorrimento morbido ── */
+  var lenis=null;
+  if(window.Lenis){
+    lenis=new Lenis({lerp:.1,wheelMultiplier:.9});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(t){lenis.raf(t*1000)});
+    gsap.ticker.lagSmoothing(0);
+  }
+  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){
+    var id=a.getAttribute('href'); if(id.length<2)return; var t=$(id); if(!t)return;
+    e.preventDefault();
+    var off=t.id==='booking-engine'?-120:0;
+    if(lenis) lenis.scrollTo(t,{offset:off,duration:1.4}); else scrollTo({top:t.getBoundingClientRect().top+scrollY+off,behavior:'smooth'});
+  })});
+
+  /* ── Titolo parola per parola ── */
+  $$('[data-split] [lang]').forEach(function(sp){
+    var words=sp.textContent.trim().split(/\s+/); sp.setAttribute('aria-label',sp.textContent.trim()); sp.textContent='';
+    words.forEach(function(w,i){
+      var m=document.createElement('span'); m.className='w'; m.setAttribute('aria-hidden','true');
+      var wi=document.createElement('span'); wi.className='wi'; wi.style.setProperty('--i',i); wi.textContent=w;
+      m.appendChild(wi); sp.appendChild(m); if(i<words.length-1) sp.appendChild(document.createTextNode(' '));
+    });
+  });
+  requestAnimationFrame(function(){requestAnimationFrame(function(){hero.classList.add('in')})});
+
+  /* ── Comparse allo scorrimento ── */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -10% 0px'});
+  $$('.rv').forEach(function(el){io.observe(el)});
+
+  /* ── Numeri che contano ── */
+  $$('[data-count]').forEach(function(el){el.textContent=fmt(0,+el.dataset.dec)});
+  var co=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return; co.unobserve(e.target);
+    var el=e.target, to=+el.dataset.count, dec=+el.dataset.dec, t0=performance.now(), dur=1800;
+    (function tick(now){var p=Math.min(1,(now-t0)/dur), k=1-Math.pow(1-p,4);
+      el.textContent=fmt(to*k,dec); if(p<1)requestAnimationFrame(tick); else {el.dataset.done=1; el.textContent=fmt(to,dec)}})(t0);
+  })},{threshold:.6});
+  $$('[data-count]').forEach(function(el){co.observe(el)});
+
+  /* ── Eroe: la foto si allarga fino allo schermo intero ── */
+  var hz=$('#hz'), frame=$('#hz-frame'), img=$('#hz-img'), chip=$('#hz-chip');
+  function s0(){var w=innerWidth; var box=w<735? w-32 : Math.min(1100,w-80); return box/w}
+  function hzMargin(){hz.style.setProperty('--hz-m',Math.round(-(1-s0())/2*innerHeight+40)+'px')}
+  hzMargin(); ScrollTrigger.addEventListener('refreshInit',hzMargin);
+  gsap.timeline({scrollTrigger:{trigger:hz,start:'top top',end:'bottom bottom',scrub:.6,invalidateOnRefresh:true}})
+    .fromTo(frame,{scale:function(){return s0()},borderRadius:function(){return 28/s0()}},{scale:1,borderRadius:0,ease:'none',duration:1},0)
+    .fromTo(img,{scale:1.18},{scale:1,ease:'none',duration:1},0)
+    .fromTo(chip,{autoAlpha:0,y:24},{autoAlpha:1,y:0,ease:'none',duration:.3},.72);
+
+  /* ── Le case: crossfade e zoom nel riquadro fisso ── */
+  var cs=$('#cs'), phs=$$('.h-ph',cs), caps=$$('.h-cap',cs), tabs=$$('.cs-tabs button',cs), cur=0;
+  var tl=gsap.timeline({scrollTrigger:{trigger:cs,start:'top top',end:'bottom bottom',scrub:.6,
+    onUpdate:function(st){var i=Math.min(2,Math.floor(st.progress*3)); if(i!==cur){cur=i; tabs.forEach(function(b,j){b.setAttribute('aria-selected',j===i?'true':'false')})}}}});
+  tl.to({},{duration:3},0);
+  gsap.set($$('img',phs[0]),{scale:1});
+  [1,2].forEach(function(i){
+    var at=i-.3;
+    tl.fromTo(phs[i],{autoAlpha:0},{autoAlpha:1,ease:'none',duration:.6},at)
+      .fromTo($('img',phs[i]),{scale:1.16},{scale:1,ease:'none',duration:1},at)
+      .to(caps[i-1],{autoAlpha:0,y:-32,ease:'none',duration:.28},at)
+      .fromTo(caps[i],{autoAlpha:0,y:40},{autoAlpha:1,y:0,ease:'none',duration:.3},at+.3);
+  });
+  tabs.forEach(function(b,i){b.addEventListener('click',function(){
+    var st=tl.scrollTrigger, y=st.start+(st.end-st.start)*([.08,.5,.92][i]);
+    if(lenis) lenis.scrollTo(y,{duration:1.2}); else scrollTo({top:y,behavior:'smooth'});
+  })});
+
+  /* ── Terrazza: parallasse lieve ── */
+  gsap.fromTo('#par img',{yPercent:-7},{yPercent:7,ease:'none',scrollTrigger:{trigger:'#par',start:'top bottom',end:'bottom top',scrub:.6}});
+
+  /* ── Fiere: scorrimento orizzontale agganciato a quello verticale ── */
+  var hs=$('#hs'), track=$('#hs-track');
+  function dist(){return Math.max(0,track.scrollWidth-innerWidth)}
+  function hsHeight(){hs.style.height=(dist()+innerHeight)+'px'}
+  hsHeight(); ScrollTrigger.addEventListener('refreshInit',hsHeight);
+  gsap.timeline({scrollTrigger:{trigger:hs,start:'top top',end:'bottom bottom',scrub:.6,invalidateOnRefresh:true}})
+    .fromTo(track,{x:0},{x:function(){return -dist()},ease:'none',duration:1},0)
+    .fromTo('#hs-bar',{scaleX:0},{scaleX:1,ease:'none',duration:1},0);
+
+  /* ── Nav scura sopra le sezioni nere ── */
+  $$('.dark').forEach(function(s){ScrollTrigger.create({trigger:s,start:'top 26px',end:'bottom 26px',toggleClass:{targets:[nav,dock],className:'on-dark'}})});
+
+  addEventListener('load',function(){ScrollTrigger.refresh()});
+})();
+</script>
+</body>
+</html>
