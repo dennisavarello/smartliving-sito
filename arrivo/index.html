@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Il tuo arrivo | SmartLiving</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#FBFBFD">
+<link rel="icon" href="../logo/favicon.svg" type="image/svg+xml">
+<script>
+  /* Il movimento parte solo se il sistema non chiede «riduci movimento». Senza la classe, tutto è visibile e fermo.
+     Dopo 4 secondi tutto diventa visibile comunque: se uno script inciampa, la pagina non resta mai vuota. */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('motion');
+    setTimeout(function(){ document.documentElement.classList.add('tutto'); }, 4000);
+  }
+</script>
+<style>
+/* ── «Il tuo arrivo» · bozza del 26 nov 2026 ─────────────────────
+   La pagina che l'ospite apre dal messaggio «check-in completato».
+   Stessi tokens del sito (versione Apple di «La Chiave»):
+   cobalto #2B45E0  l'unico accento: il segno della chiave, il link alla mappa, il pulsante di WhatsApp
+   inchiostro #1D1D1F testo · grigio #6E6E73 testo secondario (4,9:1 sul bianco)
+   carta #FBFBFD · nebbia #F5F5F7 · nero #000 (una sola sezione: come si entra)
+   Il cobalto NON si usa su: testo corrente, orari, righe dei fatti.
+   Carattere di sistema SF: 500 il testo, 600 le etichette, 700 i titoli. Niente sotto il 500.
+   Raggi 28 (24 sul telefono), pulsanti a pillola. Movimento: cubic-bezier(.32,.72,0,1), solo transform e opacity.
+   La cosa memorabile, una sola: i due orari grandi.
+   Qui dentro non c'è nessuno script esterno, nessuna statistica, nessun cookie, nessun modulo, nessun prezzo.
+   ─────────────────────────────────────────────────────────────── */
+:root{
+  --cobalt:#2B45E0; --cobalt-2:#1F35C4; --cobalt-soft:#8C9BF5;
+  --ink:#1D1D1F; --grey:#6E6E73; --paper:#FBFBFD; --mist:#F5F5F7; --line:#D2D2D7;
+  --black:#000; --grey-dark:#A1A1A6;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --side:clamp(20px,5vw,40px); --wrap:1180px;
+  --kh:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 36'><circle cx='13' cy='10' r='10'/><path d='M7.5 15h11l4.5 21H3z'/></svg>");
+  --sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:52px}
+body{font-family:var(--sf);font-size:21px;line-height:1.48;font-weight:500;letter-spacing:-.011em;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+[hidden]{display:none!important}
+html[lang="it"] [lang="en"]:not(html){display:none!important}
+html[lang="en"] [lang="it"]:not(html){display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--side)}
+h1,h2,h3{font-weight:700;text-wrap:balance;color:inherit}
+p{text-wrap:pretty}
+section{position:relative}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:600;color:var(--cobalt);letter-spacing:-.01em;margin-bottom:14px}
+.dark .eyebrow{color:var(--cobalt-soft)}
+.eyebrow::before{content:"";width:11px;height:15px;flex:none;background:currentColor;-webkit-mask:var(--kh) center/contain no-repeat;mask:var(--kh) center/contain no-repeat}
+.h2{font-size:clamp(40px,6.2vw,80px);line-height:1.04;letter-spacing:-.035em}
+.lead{font-size:clamp(21px,1.9vw,26px);line-height:1.4;color:var(--grey);font-weight:500;max-width:34em;margin-top:20px}
+.dark .lead{color:var(--grey-dark)}
+
+/* ── Pulsanti e link (come sul sito) ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 28px;border-radius:999px;background:var(--cobalt);color:#fff;font-size:19px;font-weight:600;letter-spacing:-.01em;border:0;cursor:pointer;transition:background-color 200ms ease,opacity 300ms ease,transform 120ms var(--ease);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.link{display:inline-flex;align-items:center;gap:6px;color:var(--cobalt);font-size:21px;font-weight:600}
+.link::after{content:"";width:8px;height:8px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg);transition:transform 200ms var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:var(--cobalt-2)}
+  .link:hover::after{transform:translateX(3px) rotate(45deg)}
+}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:8px}
+
+/* ── Nav in vetro che si compatta (come sul sito, senza voci di menu e senza pulsante) ── */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:52px}
+.nav::before{content:"";position:absolute;inset:0;background:rgba(251,251,253,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);opacity:0;transform:scaleY(1.25);transform-origin:top;transition:opacity 400ms var(--ease),transform 500ms var(--ease),background-color 300ms ease}
+.nav.scrolled::before{opacity:1;transform:none}
+.nav-in{position:relative;height:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--side);display:flex;align-items:center;justify-content:space-between;gap:24px;transform:translateY(6px);transition:transform 500ms var(--ease)}
+.nav.scrolled .nav-in{transform:none}
+.brand{display:block;position:relative;width:128px;height:25px}
+.brand img{position:absolute;inset:0;width:100%;height:100%;transition:opacity 300ms ease}
+.brand .lw{opacity:0}
+.lang{display:flex;background:rgba(0,0,0,.05);border-radius:999px;padding:3px}
+.lang button{border:0;background:none;cursor:pointer;font-size:15px;font-weight:600;padding:4px 10px;border-radius:999px;color:var(--grey);transition:background-color 200ms ease,color 200ms ease}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.nav.on-dark::before{background:rgba(22,22,23,.72);border-bottom-color:rgba(255,255,255,.08)}
+.nav.on-dark .brand .lw{opacity:1}.nav.on-dark .brand .lb{opacity:0}
+.nav.on-dark .lang{background:rgba(255,255,255,.12)}
+.nav.on-dark .lang button{color:var(--grey-dark)}
+.nav.on-dark .lang button[aria-pressed="true"]{background:#3A3A3C;color:#fff}
+
+/* ── 1. In alto: cos'è e di chi è ── */
+.hero{padding:clamp(96px,12vh,136px) 0 clamp(72px,9vw,120px);text-align:center;background:var(--paper)}
+.hero .eyebrow{display:block;text-wrap:balance}
+.hero .eyebrow::before{display:inline-block;vertical-align:-1px;margin-right:10px}
+.hero h1{font-size:clamp(44px,7vw,96px);line-height:1.02;letter-spacing:-.045em;margin:0 auto}
+.hero .lead{margin:22px auto 0;max-width:27em}
+.ph{overflow:hidden;border-radius:28px;aspect-ratio:16/9;max-width:var(--wrap);width:calc(100% - 2*var(--side));margin:56px auto 0}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:60% 58%}
+
+/* ── 2. Come si entra: l'unica sezione nera ── */
+.dark{background:var(--black);color:#F5F5F7}
+.key{padding:clamp(96px,13vw,160px) 0}
+.key .h2{max-width:17ch}
+.key .lead{max-width:31em}
+
+/* ── 3. Da sapere: i due orari grandi e quattro righe ── */
+.sec{padding:clamp(96px,13vw,160px) 0}
+.info{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:12px}
+.info>*{min-width:0}
+/* sul computer i due orari stanno uno sopra l'altro, grandi; sul telefono affiancati */
+.times{display:grid;grid-template-columns:1fr;gap:16px}
+.time{background:var(--mist);border-radius:28px;padding:clamp(22px,2.4vw,32px)}
+.time span{display:block;font-size:19px;font-weight:600;color:var(--grey)}
+.time strong{display:block;margin-top:8px;font-size:clamp(64px,7vw,96px);line-height:1;letter-spacing:-.05em;font-weight:700}
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:20px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.row dt{font-size:19px;font-weight:600;color:var(--grey)}
+.row dd{font-size:21px;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.row dd .sub{display:block;font-weight:500;color:var(--grey)}
+.row .link{margin-top:10px;min-height:44px}
+
+/* ── 4. Ultimo passo, facoltativo: WhatsApp (esiste solo se l'interruttore nello script è acceso) ── */
+.mist{background:var(--mist)}
+.wa-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,5vw,72px);align-items:center}
+.wa-grid .h2{font-size:clamp(36px,5vw,64px)}
+.wa-card{background:#fff;border-radius:28px;padding:clamp(24px,3vw,40px)}
+.wa-q{font-size:19px;font-weight:600}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--mist);border-radius:999px;padding:4px;margin-top:14px}
+.seg button{border:0;background:none;cursor:pointer;min-height:48px;border-radius:999px;font-size:18px;font-weight:600;color:var(--grey);transition:background-color 200ms ease,color 200ms ease,transform 120ms var(--ease)}
+.seg button:active{transform:scale(.97)}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.btn--wa{min-height:64px;width:100%;margin-top:20px;white-space:normal;text-wrap:balance;text-align:center;line-height:1.2;padding:10px 20px}
+.btn--wa.off{opacity:.38;pointer-events:none}
+.wa-hint,.wa-note{font-size:17px;color:var(--grey);margin-top:14px;text-align:center}
+.wa-note{color:var(--ink);font-weight:600}
+
+/* ── 5. Contro le truffe: una riga, sempre ── */
+/* senza WhatsApp chiude la sezione dei fatti; con WhatsApp è la fascia chiara tra la sezione grigia e il fondo */
+.safe{padding:0 0 clamp(56px,8vw,104px)}
+.sec:not(.mist):has(+ .safe){padding-bottom:clamp(40px,5vw,64px)}
+.mist + .safe{padding:clamp(36px,5vw,56px) 0}
+.safe p{display:flex;gap:14px;align-items:flex-start;font-size:21px;font-weight:600;max-width:34em}
+.safe p::before{content:"";flex:none;width:13px;height:18px;margin-top:7px;background:var(--cobalt);-webkit-mask:var(--kh) center/contain no-repeat;mask:var(--kh) center/contain no-repeat}
+
+/* ── In fondo ── */
+footer{background:var(--mist);padding:72px 0;font-size:19px;color:var(--grey)}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+.foot b{display:block;color:var(--ink);font-weight:600;margin-bottom:8px}
+
+/* ── Movimento: il titolo sale parola per parola, il resto compare allo scorrimento ── */
+.wd{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.wi{display:inline-block}
+.motion .hero .wi{transform:translateY(108%);opacity:0;transition:transform 1100ms var(--ease),opacity 700ms ease;transition-delay:calc(var(--i)*90ms + 100ms)}
+.motion .hero .after{opacity:0;transform:translateY(20px);transition:opacity 800ms ease,transform 1000ms var(--ease);transition-delay:calc(var(--d,0)*1ms + 420ms)}
+.motion .hero .ph{opacity:0;transform:scale(.96);transition:opacity 900ms ease,transform 1300ms var(--ease);transition-delay:520ms}
+.motion .hero.in .wi,.motion .hero.in .after,.motion .hero.in .ph{transform:none;opacity:1}
+.motion .rv{opacity:0;transform:translateY(40px);transition:opacity 900ms ease,transform 1100ms var(--ease);transition-delay:calc(var(--d,0)*1ms)}
+.motion .rv.in{opacity:1;transform:none}
+.tutto .hero .wi,.tutto .hero .after,.tutto .hero .ph,.tutto .rv{opacity:1!important;transform:none!important}
+@media (prefers-reduced-transparency:reduce){
+  .nav::before{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
+/* ── Tablet: la scheda di WhatsApp va sotto il testo, altrimenti i tre pulsanti stanno stretti ── */
+@media (max-width:1000px){
+  .wa-grid{grid-template-columns:1fr;gap:32px}
+  .wa-card{max-width:560px}
+}
+
+/* ── Telefono: tutto un pelo più piccolo, come sul sito (22 nov) ── */
+@media (max-width:735px){
+  body{font-size:17px}
+  .brand{width:108px;height:21px}
+  .lang{padding:2px}
+  .lang button{font-size:13px;min-height:30px;min-width:34px;padding:2px 9px}
+  .eyebrow{font-size:15px;margin-bottom:10px}
+  .hero{padding-top:84px;padding-bottom:56px}
+  .hero h1{font-size:36px}
+  .lead{font-size:16px;margin-top:14px}
+  .hero .lead{margin-top:12px}
+  .ph{aspect-ratio:4/3;border-radius:24px;margin-top:24px}
+  .h2{font-size:30px}
+  .wa-grid .h2{font-size:30px}
+  .key,.sec{padding:56px 0}
+  .info{grid-template-columns:1fr;gap:28px;margin-top:4px}
+  .times{grid-template-columns:1fr 1fr;gap:10px}
+  .time{border-radius:24px;padding:16px 18px 18px}
+  .time span{font-size:15px}
+  .time strong{font-size:52px;margin-top:4px}
+  .row{grid-template-columns:92px minmax(0,1fr);gap:12px;padding:18px 0}
+  .row dt{font-size:15px}
+  .row dd{font-size:17px}
+  .link{font-size:16px}
+  .wa-grid{grid-template-columns:1fr;gap:24px}
+  .wa-card{border-radius:24px;padding:20px}
+  .wa-q{font-size:16px}
+  .seg button{font-size:16px}
+  .btn{font-size:17px}
+  .wa-hint,.wa-note{font-size:15px}
+  .safe{padding:0 0 48px}
+  .sec:not(.mist):has(+ .safe){padding-bottom:32px}
+  .mist + .safe{padding:32px 0}
+  .safe p{font-size:17px;gap:12px}
+  .safe p::before{width:11px;height:15px;margin-top:5px}
+  footer{font-size:15px;padding:48px 0 56px}
+  .foot{grid-template-columns:1fr;gap:24px}
+}
+/* 26 nov, «un tocco solo» (Dennis: «la gente si perde, immagina un boomer»): con WhatsApp acceso la prima schermata è
+   titolo + un tasto. La foto e la sezione nera spariscono, e non c'è niente da scegliere. */
+.only-wa{display:none}
+.wa-on .only-wa{display:block}
+.wa-on .no-wa,.wa-on .hero .ph,.wa-on #entrare{display:none}
+.wa-uno{padding-top:0}
+.wa-uno .wa-card{max-width:560px;margin:0 auto;text-align:center}
+.wa-uno .h2{margin-bottom:24px}
+.btn--wa.big{display:flex;align-items:center;justify-content:center;width:100%;min-height:76px;padding:0 20px;font-size:22px;font-weight:700;line-height:1.2;background:#0F8A4B;color:#fff;border-radius:22px;text-decoration:none}
+.wa-come{margin-top:18px;font-size:18px;font-weight:500;line-height:1.45}
+.wa-senza{margin-top:22px;font-size:16px;font-weight:500;line-height:1.45;opacity:.72}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <!-- Il logo qui non porta alla pagina principale: questa pagina è solo per chi ha già prenotato -->
+    <span class="brand"><img class="lb" src="../logo/logo.svg" alt="SmartLiving" width="128" height="25"><img class="lw" src="../logo/logo-bianco.svg" alt="" width="128" height="25"></span>
+    <div class="lang" role="group" aria-label="Lingua / Language">
+      <button type="button" data-l="it" aria-pressed="true">IT</button>
+      <button type="button" data-l="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- 1. COS'È E DI CHI È: il nome che l'ospite conosce dal portale sta sopra il titolo -->
+<section class="hero" id="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <p class="eyebrow after">Terrace Apartments, Bareggio</p>
+    <h1 id="h1" data-split><span lang="it">Il tuo arrivo.</span><span lang="en">Your arrival.</span></h1>
+    <p class="lead after no-wa" style="--d:80"><span lang="it">Siamo SmartLiving: gestiamo noi Terrace Apartments, le case che hai prenotato su Booking o Airbnb.</span><span lang="en">We are SmartLiving: we run Terrace Apartments, the homes you booked on Booking or Airbnb.</span></p>
+    <p class="lead only-wa"><span lang="it">Siamo SmartLiving, gestiamo noi Terrace Apartments. Il check-in è fatto: manca solo un tocco.</span><span lang="en">We are SmartLiving, we run Terrace Apartments. Your check-in is done: just one tap left.</span></p>
+  </div>
+  <div class="ph"><img src="../foto/terrazza.jpg" width="2000" height="1336" loading="lazy" alt="La terrazza in comune delle tre case, con tavoli, lettini e barbecue"></div>
+</section>
+
+<!-- 2. UN TOCCO SOLO: WhatsApp subito sotto il titolo, senza niente da scegliere. Tolta finché WHATSAPP_ACCESO nello script è false -->
+<section class="sec wa-uno" id="whatsapp" aria-labelledby="h-wa" hidden>
+  <div class="wrap">
+    <div class="wa-card">
+      <h2 class="h2" id="h-wa"><span lang="it">Ricevi le istruzioni per entrare.</span><span lang="en">Get your entry instructions.</span></h2>
+      <a class="btn btn--wa big" id="wa-go" target="_blank" rel="noopener noreferrer"><span lang="it">Ricevile su WhatsApp</span><span lang="en">Get them on WhatsApp</span></a>
+      <p class="wa-come"><span lang="it">Si apre WhatsApp con il messaggio già scritto: premi invia e te le mandiamo lì.</span><span lang="en">WhatsApp opens with the message ready: press send and we'll send them there.</span></p>
+      <p class="wa-senza"><span lang="it">Non usi WhatsApp? Le ricevi comunque il giorno prima dell'arrivo, nei messaggi della prenotazione.</span><span lang="en">No WhatsApp? You'll still get them the day before arrival, in your booking messages.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COME SI ENTRA: la frase onesta. Qui non ci sono codici, chiavi, cancelli né video dell'ingresso -->
+<section class="key dark" id="entrare" aria-labelledby="h-key">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Come si entra</span><span lang="en">Getting in</span></p>
+    <h2 class="h2 rv" id="h-key" style="--d:80"><span lang="it">Le istruzioni per entrare ti arrivano il giorno prima.</span><span lang="en">Your entry instructions arrive the day before.</span></h2>
+    <p class="lead rv" style="--d:160"><span lang="it">Dove sono le chiavi, il codice e il WiFi: li ricevi il giorno prima dell'arrivo, a check-in online fatto, nello stesso posto dove hai ricevuto i messaggi della prenotazione.</span><span lang="en">Where the keys are, the code and the WiFi: you get them the day before you arrive, once your online check-in is done, in the same place where you received your booking messages.</span></p>
+  </div>
+</section>
+
+<!-- 3. DA SAPERE: solo fatti che non aprono una porta, presi dal manuale delle case -->
+<section class="sec" id="sapere" aria-labelledby="h-info">
+  <div class="wrap">
+    <p class="eyebrow rv"><span lang="it">Da sapere</span><span lang="en">Good to know</span></p>
+    <h2 class="vh" id="h-info"><span lang="it">Orari, indirizzo e parcheggio</span><span lang="en">Times, address and parking</span></h2>
+    <div class="info">
+      <div class="times rv" style="--d:80">
+        <p class="time"><span><span lang="it">Si entra dalle</span><span lang="en">Check-in from</span></span><strong class="num">15:00</strong></p>
+        <p class="time"><span><span lang="it">Si esce entro le</span><span lang="en">Check-out by</span></span><strong class="num">10:00</strong></p>
+      </div>
+      <dl class="rows rv" style="--d:160">
+        <div class="row">
+          <dt><span lang="it">Dove</span><span lang="en">Where</span></dt>
+          <dd><span lang="it">Via Monte Rosa 1, angolo Via Novara</span><span lang="en">Via Monte Rosa 1, corner of Via Novara</span>
+            <span class="sub"><span lang="it">20008 Bareggio (MI)</span><span lang="en">20008 Bareggio (MI), Italy</span></span>
+            <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Via%20Monte%20Rosa%201%2C%2020008%20Bareggio%20MI" target="_blank" rel="noopener noreferrer"><span lang="it">Apri la mappa</span><span lang="en">Open the map</span></a></dd>
+        </div>
+        <div class="row">
+          <dt><span lang="it">Parcheggio</span><span lang="en">Parking</span></dt>
+          <dd><span lang="it">Privato, sotto le case</span><span lang="en">Private, below the apartments</span>
+            <span class="sub"><span lang="it">Vicino al negozio Serfa Serramenti.</span><span lang="en">Next to the Serfa Serramenti store.</span></span></dd>
+        </div>
+        <div class="row">
+          <dt><span lang="it">In casa</span><span lang="en">Inside</span></dt>
+          <dd><span lang="it">Asciugamani e lenzuola ci sono già</span><span lang="en">Towels and sheets are already there</span></dd>
+        </div>
+        <div class="row">
+          <dt><span lang="it">Fumo</span><span lang="en">Smoking</span></dt>
+          <dd><span lang="it">In casa non si fuma</span><span lang="en">No smoking inside</span>
+            <span class="sub"><span lang="it">C'è la terrazza.</span><span lang="en">There's the terrace.</span></span></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 5. CONTRO LE TRUFFE: una riga, sempre visibile -->
+<section class="safe" aria-label="Sicurezza">
+  <div class="wrap">
+    <p class="rv"><span lang="it">Non chiediamo mai pagamenti né dati della carta per messaggio.</span><span lang="en">We never ask for payments or card details by message.</span></p>
+  </div>
+</section>
+</main>
+
+<footer aria-label="Contatti">
+  <div class="wrap foot">
+    <div style="display:grid;gap:20px;align-content:start">
+      <img src="../logo/logo.svg" alt="SmartLiving" width="180" height="35">
+    </div>
+    <div><b><span lang="it">Dove siamo</span><span lang="en">Where we are</span></b><p>Via Monte Rosa 1<br>20008 Bareggio (MI)</p>
+      <p style="margin-top:12px"><span lang="it">Su Booking e Airbnb: Terrace Apartments</span><span lang="en">On Booking and Airbnb: Terrace Apartments</span></p></div>
+    <div><b><span lang="it">Gestito da</span><span lang="en">Run by</span></b><p>Dennis Avarello Consulting srls<br>P.IVA 13738320962</p></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ── L'interruttore di WhatsApp ──────────────────────────────────
+     false = Mark non è ancora collegato al numero delle case: la sezione WhatsApp viene tolta dalla pagina.
+     true  = la sezione compare come ultimo passo, facoltativo. */
+  var WHATSAPP_ACCESO = true;
+
+  var NUMERO_CASE = '393516759581';   /* il numero WhatsApp delle case: non è quello del tasto del sito */
+  var CASE = { confort:'Confort', elegant:'Elegant', modern:'Modern' };
+  /* Il messaggio già scritto: finisce con «n. » così l'ospite aggiunge il numero di prenotazione e manda */
+  var MESSAGGIO = {
+    it: function(c){ return (c ? 'Ciao! Ho prenotato la casa ' + c + ' e ho fatto il check-in online.' : 'Ciao! Ho fatto il check-in online.') + ' Mi mandate qui le istruzioni per entrare?'; },
+    en: function(c){ return (c ? 'Hi! I booked the ' + c + ' apartment and completed the online check-in.' : 'Hi! I completed the online check-in.') + ' Could you send me the entry instructions here?'; }
+  };
+  var TITOLO = { it:'Il tuo arrivo | SmartLiving', en:'Your arrival | SmartLiving' };
+
+  var root = document.documentElement;
+  var $ = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+  var q = new URLSearchParams(location.search);
+
+  /* ── WhatsApp: la casa si sceglie coi tre pulsanti, oppure arriva dall'indirizzo (?casa=modern) ── */
+  var sez = $('#whatsapp'), vai = $('#wa-go'), casa = null;
+  if (WHATSAPP_ACCESO) { sez.hidden = false; root.classList.add('wa-on'); }
+  else { sez.parentNode.removeChild(sez); sez = null; }
+  var daIndirizzo = (q.get('casa') || '').toLowerCase();
+  if (Object.prototype.hasOwnProperty.call(CASE, daIndirizzo)) casa = daIndirizzo;
+
+  function aggiornaWa(){
+    if (!sez) return;
+    /* Un tocco solo, niente scelte: la casa entra nel messaggio solo se arriva dall'indirizzo (?casa=modern). Mark riconosce l'ospite dal numero. */
+    vai.href = 'https://wa.me/' + NUMERO_CASE + '?text=' + encodeURIComponent(MESSAGGIO[root.lang](casa ? CASE[casa] : null));
+  }
+
+  /* ── Lingua: dall'indirizzo (?lang=en) o dalla lingua del telefono. Non si salva niente sul dispositivo ── */
+  function setLang(l){
+    root.lang = l;
+    $$('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.l === l ? 'true' : 'false'); });
+    document.title = TITOLO[l];
+    aggiornaWa();
+  }
+  var lingua = q.get('lang');
+  if (lingua !== 'it' && lingua !== 'en') lingua = ((navigator.language || 'it').slice(0,2).toLowerCase() === 'it') ? 'it' : 'en';
+  setLang(lingua);
+  $$('.lang button').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.l); }); });
+
+  /* ── Nav: si compatta allo scorrimento e diventa scura sopra la sezione nera ── */
+  var nav = $('#nav'), scure = $$('.dark');
+  function onScroll(){
+    nav.classList.toggle('scrolled', scrollY > 8);
+    var sopraNero = false;
+    scure.forEach(function(s){ var r = s.getBoundingClientRect(); if (r.top <= 26 && r.bottom >= 26) sopraNero = true; });
+    nav.classList.toggle('on-dark', sopraNero);
+  }
+  addEventListener('scroll', onScroll, { passive:true }); addEventListener('resize', onScroll); onScroll();
+
+  /* ── Movimento: il titolo parola per parola, il resto quando entra nello schermo ── */
+  $$('[data-split] > span').forEach(function(sp){
+    var parole = sp.textContent.trim().split(/\s+/); sp.textContent = '';
+    parole.forEach(function(p, i){
+      var w = document.createElement('span'); w.className = 'wd';
+      var wi = document.createElement('span'); wi.className = 'wi'; wi.style.setProperty('--i', i); wi.textContent = p;
+      w.appendChild(wi); sp.appendChild(w);
+      if (i < parole.length - 1) sp.appendChild(document.createTextNode(' '));
+    });
+  });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ $('#hero').classList.add('in'); }); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(voci){
+      voci.forEach(function(v){ if (v.isIntersecting) { v.target.classList.add('in'); io.unobserve(v.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:.08 });
+    $$('.rv').forEach(function(el){ io.observe(el); });
+  } else { $$('.rv').forEach(function(el){ el.classList.add('in'); }); }
+})();
+</script>
+</body>
+</html>
